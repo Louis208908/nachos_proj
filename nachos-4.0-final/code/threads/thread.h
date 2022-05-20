@@ -130,6 +130,10 @@ class Thread {
 		return this->PredictedBurstTime;
 	}
 
+	inline void setPredictedBurstTime(int predicted_time){
+		this->PredictedBurstTime = predicted_time;
+	}
+
     //<TODO>
 
   private:
