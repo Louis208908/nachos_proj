@@ -78,7 +78,7 @@ Scheduler::ReadyToRun (Thread *thread)
 	thread->setStatus(READY);
 	readyList->Append(thread);
     
-    // sort(readyList.begin(), readyList.end(), cmp);
+    sort(readyList->fisrt(), readyList->last(), Scheduler::cmp);
 }
 //<TODO>
 
