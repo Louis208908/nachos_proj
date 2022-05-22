@@ -100,7 +100,6 @@ bool
 AddrSpace::Load(char *fileName) 
 {
     OpenFile *executable = kernel->fileSystem->Open(fileName);
-    
     NoffHeader noffH;
     unsigned int size;
 
@@ -108,7 +107,6 @@ AddrSpace::Load(char *fileName)
     	cerr << "Unable to open file " << fileName << "\n";
     	return FALSE;
     }
-    cout << "get executable\n";
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
     if ((noffH.noffMagic != NOFFMAGIC) && 
 		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
@@ -120,7 +118,7 @@ AddrSpace::Load(char *fileName)
 			+ UserStackSize;	// we need to increase the size
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
-	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
+//	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
     size = numPages * PageSize;
 
     int memoryAddr = NULL;
@@ -171,7 +169,6 @@ AddrSpace::Load(char *fileName)
     DEBUG(dbgSJF, "[AddrSpace::Load over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
 
     delete executable;			// close file
-    cout << "return true\n";
     return TRUE;			// success
 }
 
@@ -186,12 +183,10 @@ AddrSpace::Load(char *fileName)
 void 
 AddrSpace::Execute(char *fileName) 
 {
-    cout << "file = " << fileName << endl;
-    if (!Load(fileName)) {
-        cout << "inside !Load(FileName)" << endl;
-        return;             // executable not found
-    }
-    // cout << "get file!\n";
+    /*if (!Load(fileName)) {
+    cout << "inside !Load(FileName)" << endl;
+    return;             // executable not found
+    }*/
     kernel->currentThread->space = this;
 
     this->InitRegisters();		// set the initial register values

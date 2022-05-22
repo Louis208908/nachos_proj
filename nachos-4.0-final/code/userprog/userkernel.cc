@@ -170,10 +170,7 @@ ForkExecute(Thread *t)
 {
 	cout << "Thread: " << (void *) t << endl;
 	DEBUG(dbgSJF, "ForkExecute => fork thread id: " << t->getID() << ", currentTick: " << kernel->stats->totalTicks);
-	
-	char* threadName = t->getName();
-    // cout << "debug\n";
-    t->space->Execute(threadName);
+	t->space->Execute(t->getName());
 }
 //<TODO>
 
@@ -185,12 +182,11 @@ UserProgKernel::InitializeOneThread(char* name)
 	// When each execfile comes to Exec function, Kernel helps to create a thread for it.
 	// While creating a new thread, thread should be initialized, and then forked.
 	//<TODO>
-	Thread* naive = new Thread(name, threadNum);
-	naive->space = new AddrSpace();
+    Thread *naive = new Thread(name, threadNum);
+    naive->space  = new AddrSpace( );
     naive->Fork((VoidFunctionPtr)&ForkExecute, (void *)naive);
 
-
-	threadNum++;
+    threadNum++;
     return threadNum - 1;
 }
 
@@ -203,7 +199,6 @@ UserProgKernel::InitializeAllThreads()
         int a = InitializeOneThread(execfile[i]);
         cout << "execfile[" << i << "]: " << execfile[i] << " end "<< endl;
     }
-	cout << "create all threads\n";
     // After InitializeAllThreads(), let main thread be terminated that we can start to run our thread.
     currentThread->Finish();
     // kernel->machine->Run();
