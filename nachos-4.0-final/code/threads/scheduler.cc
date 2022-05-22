@@ -84,7 +84,7 @@ Scheduler::ReadyToRun (Thread *thread)
 {
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
-    if(thread->getPredictedBurstTime() <= kernel->currentThread->getPredictedBurstTime()){
+    if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         thread->setStatus(READY);
         readyList->Insert(thread);
         cout << "Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
