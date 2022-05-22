@@ -183,6 +183,7 @@ AddrSpace::Load(char *fileName)
 void 
 AddrSpace::Execute(char *fileName) 
 {
+    cout << "file = " << fileName << endl;
     if (!Load(fileName)) {
         cout << "inside !Load(FileName)" << endl;
         return;             // executable not found
