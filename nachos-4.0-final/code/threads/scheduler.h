@@ -39,6 +39,14 @@ class Scheduler {
 	void Print();			// Print contents of ready list
    
     // SelfTest for scheduler is implemented in class Thread
+
+	inline int getPreviousPrediction(){
+		return this->previousPredicted;
+	}
+
+	void setPreviousPrediction(int newPrediction){
+		this->previousPredicted = newPrediction;
+	}
     
   private:
 	SchedulerType schedulerType;
@@ -46,9 +54,7 @@ class Scheduler {
 	SortedList<Thread *> *readyList;
 	//<TODO>
 	//Variable definition of sorting rule of readyQueue
-	int cmp(Thread *t1, Thread *t2){
-		return t1->getPredictedBurstTime() < t2->getPredictedBurstTime();
-	}
+	int previousPredicted;
 	
 	//<TODO>
 
