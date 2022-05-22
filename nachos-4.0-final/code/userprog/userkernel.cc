@@ -199,7 +199,8 @@ UserProgKernel::InitializeAllThreads()
         int a = InitializeOneThread(execfile[i]);
         cout << "execfile[" << i << "]: " << execfile[i] << " end "<< endl;
     }
+	cout << "create all threads\n";
     // After InitializeAllThreads(), let main thread be terminated that we can start to run our thread.
     currentThread->Finish();
-    // kernel->machine->Run();
+    kernel->machine->Run();
 }
