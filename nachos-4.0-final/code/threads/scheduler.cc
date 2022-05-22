@@ -88,11 +88,12 @@ Scheduler::ReadyToRun (Thread *thread)
         kernel->currentThread->Yield();
     }
     // add preemption condition
-
-    thread->setStatus(READY);
-	readyList->Insert(thread);
-    cout << "Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
-    DEBUG(dbgSJF, "<I> Tick [" << kernel->stats->totalTicks << "]: Thread [" << thread->getID() << "] is inserted into readyQueue\n");
+    else{
+        thread->setStatus(READY);
+        readyList->Insert(thread);
+        cout << "Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
+        DEBUG(dbgSJF, "<I> Tick [" << kernel->stats->totalTicks << "]: Thread [" << thread->getID() << "] is inserted into readyQueue\n");
+    }
     
 }
 //<TODO>
