@@ -186,6 +186,7 @@ UserProgKernel::InitializeOneThread(char* name)
 	// While creating a new thread, thread should be initialized, and then forked.
 	//<TODO>
 	Thread* naive = new Thread(name, threadNum);
+	naive->space = new AddrSpace();
     naive->Fork((VoidFunctionPtr)&ForkExecute, (void *)naive);
 
 
