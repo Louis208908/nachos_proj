@@ -171,6 +171,7 @@ ForkExecute(Thread *t)
 	cout << "Thread: " << (void *) t << endl;
 	DEBUG(dbgSJF, "ForkExecute => fork thread id: " << t->getID() << ", currentTick: " << kernel->stats->totalTicks);
 	t->space->Execute(t->getName());
+	cout << "debug\n";
 }
 //<TODO>
 
@@ -202,5 +203,5 @@ UserProgKernel::InitializeAllThreads()
 	cout << "create all threads\n";
     // After InitializeAllThreads(), let main thread be terminated that we can start to run our thread.
     currentThread->Finish();
-    kernel->machine->Run();
+    // kernel->machine->Run();
 }
