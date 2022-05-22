@@ -40,7 +40,7 @@
 Scheduler::Scheduler()
 {
 	//	schedulerType = type;
-	readyList = new List<Thread *>;
+	readyList = new SortedList<Thread *>(&this->cmp);
 	toBeDestroyed = NULL;
 }
 //<TODO>

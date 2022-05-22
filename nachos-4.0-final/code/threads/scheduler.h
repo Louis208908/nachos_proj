@@ -46,7 +46,7 @@ class Scheduler {
 	SortedList<Thread *> *readyList;
 	//<TODO>
 	//Variable definition of sorting rule of readyQueue
-	static bool cmp(Thread *t1, Thread *t2){
+	int cmp(Thread *t1, Thread *t2){
 		return t1->getPredictedBurstTime() < t2->getPredictedBurstTime();
 	}
 	
