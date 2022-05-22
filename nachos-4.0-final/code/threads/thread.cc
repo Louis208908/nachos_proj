@@ -219,9 +219,12 @@ Thread::Yield ()
 
 	nextThread = kernel->scheduler->FindNextToRun();
 	if (nextThread != NULL) {
-		kernel->scheduler->ReadyToRun(this);
+        int newPredictedBurstTime = this->getBurstTime() * 0.5 + 0.5 * kernel->scheduler->getPreviousPrediction();
+        DEBUG(dbgSJF, "<U>Tick [" << kernel->stats->totalTicks << "]: Thread [" << this->getID() << "] update approximate burst time, from: [" << kernel->scheduler->getPreviousPrediction() << "] + [" << this->getBurstTime() << "], to [" << newPredictedBurstTime << "]\n");
+        kernel->scheduler->setPreviousPrediction(newPredictedBurstTime);
+        kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
-	}
+    }
 	(void)kernel->interrupt->SetLevel(oldLevel);
 }
 //<TODO>
