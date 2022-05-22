@@ -42,9 +42,8 @@ class Scheduler {
     
   private:
 	SchedulerType schedulerType;
-	List<Thread *> *readyList;	// queue of threads that are ready to run,
-					// but not running
-
+	// List<Thread *> *readyList;	// queue of threads that are ready to run,but not running
+	SortedList<Thread *> *readyList;
 	//<TODO>
 	//Variable definition of sorting rule of readyQueue
 	static bool cmp(Thread *t1, Thread *t2){
