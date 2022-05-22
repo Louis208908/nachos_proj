@@ -82,18 +82,18 @@ Scheduler::~Scheduler()
 void
 Scheduler::ReadyToRun (Thread *thread)
 {
-    int newPredictedBurstTime = thread->getBurstTime( ) * 0.5 +
-        0.5 * kernel->scheduler->getPreviousPrediction( );
-    DEBUG(dbgSJF,
-          "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                      << thread->getID( )
-                      << "] update approximate burst time, from: ["
-                      << kernel->scheduler->getPreviousPrediction( ) << "] + ["
-                      << thread->getBurstTime( ) << "], to ["
-                      << newPredictedBurstTime << "]\n");
+    // int newPredictedBurstTime = thread->getBurstTime( ) * 0.5 +
+    //     0.5 * kernel->scheduler->getPreviousPrediction( );
+    // DEBUG(dbgSJF,
+    //       "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
+    //                   << thread->getID( )
+    //                   << "] update approximate burst time, from: ["
+    //                   << kernel->scheduler->getPreviousPrediction( ) << "] + ["
+    //                   << thread->getBurstTime( ) << "], to ["
+    //                   << newPredictedBurstTime << "]\n");
 
-    kernel->scheduler->setPreviousPrediction(newPredictedBurstTime);
-    thread->setPredictedBurstTime(newPredictedBurstTime);
+    // kernel->scheduler->setPreviousPrediction(newPredictedBurstTime);
+    // thread->setPredictedBurstTime(newPredictedBurstTime);
     ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
