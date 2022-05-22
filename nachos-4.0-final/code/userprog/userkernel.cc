@@ -172,7 +172,7 @@ ForkExecute(Thread *t)
 	DEBUG(dbgSJF, "ForkExecute => fork thread id: " << t->getID() << ", currentTick: " << kernel->stats->totalTicks);
 	
 	char* threadName = t->getName();
-    cout << "debug\n";
+    // cout << "debug\n";
     t->space->Execute(threadName);
 }
 //<TODO>
