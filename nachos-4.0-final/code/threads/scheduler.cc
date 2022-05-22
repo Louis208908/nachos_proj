@@ -84,10 +84,14 @@ Scheduler::ReadyToRun (Thread *thread)
 {
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
+    if(thread->getPredictedBurstTime() <= kernel->currentThread->getPredictedBurstTime()){
+        kernel->currentThread->Yield();
+    }
+    // add preemption condition
 
     thread->setStatus(READY);
 	readyList->Insert(thread);
-    cout << "Predicted Burst Time of thread " << thread->getID() << "is " << thread->getPredictedBurstTime() << endl;
+    cout << "Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
     DEBUG(dbgSJF, "<I> Tick [" << kernel->stats->totalTicks << "]: Thread [" << thread->getID() << "] is inserted into readyQueue\n");
     
 }
