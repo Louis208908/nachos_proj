@@ -78,7 +78,7 @@ Scheduler::ReadyToRun (Thread *thread)
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
 
     thread->setStatus(READY);
-	readyList->Append(thread);
+	readyList->Insert(thread);
     DEBUG(dbgSJF, "<I> Tick [" << kernel->stats->totalTicks << "]: Thread [" << thread->getID() << "] is inserted into readyQueue\n");
     
 }
