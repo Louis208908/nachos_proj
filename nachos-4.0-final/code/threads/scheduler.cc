@@ -82,7 +82,19 @@ Scheduler::~Scheduler()
 void
 Scheduler::ReadyToRun (Thread *thread)
 {
-	ASSERT(kernel->interrupt->getLevel() == IntOff);
+    int newPredictedBurstTime = thread->getBurstTime( ) * 0.5 +
+        0.5 * kernel->scheduler->getPreviousPrediction( );
+    DEBUG(dbgSJF,
+          "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                      << thread->getID( )
+                      << "] update approximate burst time, from: ["
+                      << kernel->scheduler->getPreviousPrediction( ) << "] + ["
+                      << thread->getBurstTime( ) << "], to ["
+                      << newPredictedBurstTime << "]\n");
+
+    kernel->scheduler->setPreviousPrediction(newPredictedBurstTime);
+    thread->setPredictedBurstTime(newPredictedBurstTime);
+    ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         thread->setStatus(READY);
@@ -94,7 +106,7 @@ Scheduler::ReadyToRun (Thread *thread)
     else{
         thread->setStatus(READY);
         readyList->Insert(thread);
-        cout << "Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
+        cout << "bla bla bla Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
         DEBUG(dbgSJF, "<I> Tick [" << kernel->stats->totalTicks << "]: Thread [" << thread->getID() << "] is inserted into readyQueue\n");
     }
     
