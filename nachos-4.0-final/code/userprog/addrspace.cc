@@ -100,7 +100,7 @@ bool
 AddrSpace::Load(char *fileName) 
 {
     OpenFile *executable = kernel->fileSystem->Open(fileName);
-    cout << "get executable\n";
+    
     NoffHeader noffH;
     unsigned int size;
 
@@ -119,7 +119,7 @@ AddrSpace::Load(char *fileName)
 			+ UserStackSize;	// we need to increase the size
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
-//	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
+	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
     size = numPages * PageSize;
 
     int memoryAddr = NULL;
@@ -170,6 +170,7 @@ AddrSpace::Load(char *fileName)
     DEBUG(dbgSJF, "[AddrSpace::Load over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
 
     delete executable;			// close file
+    cout << "return true\n";
     return TRUE;			// success
 }
 
