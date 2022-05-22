@@ -283,7 +283,10 @@ Thread::Sleep (bool finishing)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
 
 		// returns when it's time for us to run
-	kernel->scheduler->Run(nextThread, finishing);
+    DEBUG(dbgSJF,
+          "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                       << nextThread->getID( ) << "] is removed from readyQueue\n");
+    kernel->scheduler->Run(nextThread, finishing);
 }
 //<TODO>
 
