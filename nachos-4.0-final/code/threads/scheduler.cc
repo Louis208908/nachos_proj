@@ -39,8 +39,11 @@
 // Initialize ReadyQueue
 Scheduler::Scheduler()
 {
+    int cmp(Thread* T1, Thread* T2) = [](Thread* T1, Thread* T2){
+        return T1->getPredictedBurstTime() < T2->getPredictedBurstTime();
+    };
 	//	schedulerType = type;
-	readyList = new SortedList<Thread *>(&this->cmp);
+	readyList = new SortedList<Thread *>(cmp);
 	toBeDestroyed = NULL;
 }
 //<TODO>
