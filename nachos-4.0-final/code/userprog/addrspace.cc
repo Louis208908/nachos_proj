@@ -100,6 +100,7 @@ bool
 AddrSpace::Load(char *fileName) 
 {
     OpenFile *executable = kernel->fileSystem->Open(fileName);
+    cout << "get executable\n";
     NoffHeader noffH;
     unsigned int size;
 
