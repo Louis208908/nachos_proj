@@ -44,7 +44,7 @@ Scheduler::Scheduler()
 {
     
 	//	schedulerType = type;
-	readyList = new SortedList<Thread *>(cmp);
+	readyList = new SortedList(cmp);
 	toBeDestroyed = NULL;
 }
 //<TODO>
