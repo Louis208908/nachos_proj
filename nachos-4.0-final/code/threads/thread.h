@@ -118,7 +118,7 @@ class Thread {
     }
     // 2. set/get RunTime
 	inline int getBurstTime(){
-        return this->RunTime = endTime - startTime;
+        return this->burstTime = endTime - startTime;
     }
 
 	int setStartTime(int start_time){return this->startTime = start_time;}
@@ -127,11 +127,11 @@ class Thread {
 
 	// 3. set/get PreditedBurstTime
 	inline int getPredictedBurstTime(){
-		return this->PredictedBurstTime;
+		return this->predictedBurstTime;
 	}
 
 	inline void setPredictedBurstTime(int predicted_time){
-		this->PredictedBurstTime = predicted_time;
+		this->predictedBurstTime = predicted_time;
 	}
 
     //<TODO>
