@@ -216,7 +216,7 @@ Thread::Yield ()
 	ASSERT(this == kernel->currentThread);
 
 	DEBUG(dbgThread, "Yielding thread: " << name);
-
+    kernel->currentThread->setEndTime(kernel->stats->totalTicks);
 	nextThread = kernel->scheduler->FindNextToRun();
     DEBUG(dbgSJF,
           "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
