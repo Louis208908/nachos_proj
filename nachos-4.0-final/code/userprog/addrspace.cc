@@ -108,6 +108,7 @@ AddrSpace::Load(char *fileName)
     	cerr << "Unable to open file " << fileName << "\n";
     	return FALSE;
     }
+    cout << "get executable\n";
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
     if ((noffH.noffMagic != NOFFMAGIC) && 
 		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
