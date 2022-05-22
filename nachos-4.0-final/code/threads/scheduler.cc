@@ -35,6 +35,11 @@
 // Hint: Funtion Type should be "static int"
 //<TODO>
 int SJFcmp(Thread* a, Thread *b){
+    DEBUG(dbgSJF,
+          "Thread [" << a->getID( ) << "]'s and Thread [" << b->getID( )
+                     << "]'s burst time are [" << a->getPredictedBurstTime( )
+                     << "] and [" << b->getPredictedBurstTime( ) << "]\n");
+
     if(a->getPredictedBurstTime() != b->getPredictedBurstTime())
         return a->getPredictedBurstTime() < b->getPredictedBurstTime();
     return a->getID() < b->getID();
