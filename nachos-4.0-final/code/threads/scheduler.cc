@@ -33,19 +33,17 @@
 //<TODO>
 // Declare sorting rule of SortedList
 // Hint: Funtion Type should be "static int"
-static int cmp(Thread *T1, Thread *T2){
-    return T1->getPredictedBurstTime( ) < T2->getPredictedBurstTime( );
-};
 //<TODO>
-
+int SJFcmp(Thread* a, Thread *b){
+    return a->getPredictedBurstTime() < b->getPredictedBurstTime();
+}
 //<TODO>
 // Initialize ReadyQueue
 Scheduler::Scheduler()
 {
-    
 	//	schedulerType = type;
-	readyList = new SortedList(cmp);
-	toBeDestroyed = NULL;
+    readyList     = new SortedList<Thread *>(SJFcmp);
+    toBeDestroyed = NULL;
 }
 //<TODO>
 
