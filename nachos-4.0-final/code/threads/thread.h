@@ -150,8 +150,8 @@ class Thread {
 
 	//<Trace start
 	int ID;
-	int RunTime;
-	int PredictedBurstTime;
+	int burstTime;
+	int predictedBurstTime;
 	
 	int endTime;
 	int startTime;
