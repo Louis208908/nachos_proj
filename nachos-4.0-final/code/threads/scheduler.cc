@@ -163,6 +163,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     // of view of the thread and from the perspective of the "outside world".
 
     cout << "Switching from: " << oldThread->getID() << " to: " << nextThread->getID() << endl;
+    kernel->currentThread->setStartTime(kernel->stats->totalTicks);
     SWITCH(oldThread, nextThread);
 
     // we're back, running oldThread
