@@ -106,19 +106,18 @@ Thread::Fork(VoidFunctionPtr func, void *arg)
     StackAllocate(func, arg);
 
     oldLevel = interrupt->SetLevel(IntOff);
-    int newPredictedBurstTime =
-        this->getBurstTime( ) * 0.5 +
-        0.5 * kernel->scheduler->getPreviousPrediction( );
-    DEBUG(dbgSJF,
-          "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                      << this->getID( )
-                      << "] update approximate burst time, from: ["
-                      << kernel->scheduler->getPreviousPrediction( ) << "] + ["
-                      << this->getBurstTime( ) << "], to ["
-                      << newPredictedBurstTime << "]\n");
+    // int newPredictedBurstTime =
+    //     this->getBurstTime( ) * 0.5 +
+    //     0.5 * kernel->scheduler->getPreviousPrediction( );
+    // DEBUG(dbgSJF,
+    //       "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
+    //                   << this->getID( )
+    //                   << "] update approximate burst time, from: ["
+    //                   << kernel->scheduler->getPreviousPrediction( ) << "] + ["
+    //                   << this->getBurstTime( ) << "], to ["
+    //                   << newPredictedBurstTime << "]\n");
 
-    kernel->scheduler->setPreviousPrediction(newPredictedBurstTime);
-    this->setPredictedBurstTime(newPredictedBurstTime);
+    
     scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts are disabled!
     (void) interrupt->SetLevel(oldLevel);
 }    
