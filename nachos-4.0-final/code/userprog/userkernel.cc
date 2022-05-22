@@ -168,7 +168,7 @@ UserProgKernel::SelfTest() {
 void
 ForkExecute(Thread *t)
 {
-	// cout << "Thread: " << (void *) t << endl;
+	cout << "Thread: " << (void *) t << endl;
 	DEBUG(dbgSJF, "ForkExecute => fork thread id: " << t->getID() << ", currentTick: " << kernel->stats->totalTicks);
 	t->space->Execute(t->getName());
 }
@@ -182,6 +182,8 @@ UserProgKernel::InitializeOneThread(char* name)
 	// When each execfile comes to Exec function, Kernel helps to create a thread for it.
 	// While creating a new thread, thread should be initialized, and then forked.
 	//<TODO>
+	Thread* naive = new Thread(name, threadNum);
+	ForkExecute(naive);
 
     threadNum++;
     return threadNum - 1;
