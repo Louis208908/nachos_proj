@@ -41,7 +41,7 @@ int SJFcmp(Thread* a, Thread *b){
                      << "] and [" << b->getPredictedBurstTime( ) << "]\n");
 
     if(a->getPredictedBurstTime() != b->getPredictedBurstTime())
-        return a->getPredictedBurstTime() < b->getPredictedBurstTime();
+        return a->getPredictedBurstTime() > b->getPredictedBurstTime();
     return a->getID() < b->getID();
 }
 //<TODO>
