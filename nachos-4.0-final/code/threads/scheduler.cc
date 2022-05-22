@@ -35,7 +35,9 @@
 // Hint: Funtion Type should be "static int"
 //<TODO>
 int SJFcmp(Thread* a, Thread *b){
-    return a->getPredictedBurstTime() < b->getPredictedBurstTime();
+    if(a->getPredictedBurstTime() != b->getPredictedBurstTime())
+        return a->getPredictedBurstTime() < b->getPredictedBurstTime();
+    return a->getID() < b->getID();
 }
 //<TODO>
 // Initialize ReadyQueue
