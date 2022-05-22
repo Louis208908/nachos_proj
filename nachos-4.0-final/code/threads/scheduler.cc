@@ -39,7 +39,7 @@
 // Initialize ReadyQueue
 Scheduler::Scheduler()
 {
-    int cmp(Thread* T1, Thread* T2) = [](Thread* T1, Thread* T2){
+    int (*cmp)(Thread* T1, Thread* T2) = [](Thread* T1, Thread* T2){
         return T1->getPredictedBurstTime() < T2->getPredictedBurstTime();
     };
 	//	schedulerType = type;
