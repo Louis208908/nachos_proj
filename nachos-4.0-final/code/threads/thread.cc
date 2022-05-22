@@ -219,7 +219,7 @@ Thread::Yield ()
     kernel->currentThread->setEndTime(kernel->stats->totalTicks);
 	nextThread = kernel->scheduler->FindNextToRun();
     DEBUG(dbgSJF,
-          "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+          "<R1> Tick [" << kernel->stats->totalTicks << "]: Thread ["
                        << this->getID( )
                        << "] is removed from readyQueue\n");
 
@@ -284,7 +284,7 @@ Thread::Sleep (bool finishing)
 
 		// returns when it's time for us to run
     DEBUG(dbgSJF,
-          "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+          "<R2> Tick [" << kernel->stats->totalTicks << "]: Thread ["
                        << nextThread->getID( ) << "] is removed from readyQueue\n");
     nextThread->setStartTime(kernel->stats->totalTicks);
     kernel->scheduler->Run(nextThread, finishing);
