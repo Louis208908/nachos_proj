@@ -277,7 +277,7 @@ Thread::Sleep (bool finishing)
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
 	DEBUG(dbgThread, "Sleeping thread: " << name);
-
+    kernel->currentThread->setEndTime(kernel->stats->totalTicks);
 	status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
@@ -286,6 +286,7 @@ Thread::Sleep (bool finishing)
     DEBUG(dbgSJF,
           "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
                        << nextThread->getID( ) << "] is removed from readyQueue\n");
+    nextThread->setStartTime(kernel->stats->totalTicks);
     kernel->scheduler->Run(nextThread, finishing);
 }
 //<TODO>
