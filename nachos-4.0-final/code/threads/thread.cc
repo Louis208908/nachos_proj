@@ -278,6 +278,7 @@ Thread::Sleep (bool finishing)
 
 	DEBUG(dbgThread, "Sleeping thread: " << name);
     kernel->currentThread->setEndTime(kernel->stats->totalTicks);
+    kernel->currentThread->getBurstTime();
 	status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
