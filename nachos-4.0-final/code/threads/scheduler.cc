@@ -46,6 +46,7 @@ Scheduler::Scheduler()
 	//	schedulerType = type;
     readyList     = new SortedList<Thread *>(SJFcmp);
     toBeDestroyed = NULL;
+    previousPredicted = 0;
 }
 //<TODO>
 
