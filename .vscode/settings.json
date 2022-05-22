@@ -11,6 +11,7 @@
         "vector": "cpp",
         "initializer_list": "cpp",
         "valarray": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "iostream": "cpp"
     }
 }
