@@ -218,10 +218,23 @@ Thread::Yield ()
 	DEBUG(dbgThread, "Yielding thread: " << name);
 
 	nextThread = kernel->scheduler->FindNextToRun();
-	if (nextThread != NULL) {
+    DEBUG(dbgSJF,
+          "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                       << this->getID( )
+                       << "] is removed from readyQueue\n");
+
+    if (nextThread != NULL) {
         int newPredictedBurstTime = this->getBurstTime() * 0.5 + 0.5 * kernel->scheduler->getPreviousPrediction();
-        DEBUG(dbgSJF, "<U>Tick [" << kernel->stats->totalTicks << "]: Thread [" << this->getID() << "] update approximate burst time, from: [" << kernel->scheduler->getPreviousPrediction() << "] + [" << this->getBurstTime() << "], to [" << newPredictedBurstTime << "]\n");
+        DEBUG(dbgSJF,
+              "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                          << this->getID( )
+                          << "] update approximate burst time, from: ["
+                          << kernel->scheduler->getPreviousPrediction( )
+                          << "] + [" << this->getBurstTime( ) << "], to ["
+                          << newPredictedBurstTime << "]\n");
+
         kernel->scheduler->setPreviousPrediction(newPredictedBurstTime);
+        this->setPredictedBurstTime(newPredictedBurstTime);
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
     }
