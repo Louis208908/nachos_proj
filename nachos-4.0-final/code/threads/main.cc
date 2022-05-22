@@ -75,6 +75,7 @@ main(int argc, char **argv)
     debug = new Debug(debugArg);
     
     DEBUG(dbgThread, "Entering main");
+    DEBUG(dbgSJF, "Entering main\n");
 
     kernel = new KernelType(argc, argv);
     kernel->Initialize();
