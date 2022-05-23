@@ -33,6 +33,7 @@
 //<TODO>
 // Declare sorting rule of SortedList
 // Hint: Funtion Type should be "static int"
+static int cmp(Thread *a, Thread *b);
 //<TODO>
 
 //<TODO>
@@ -40,7 +41,8 @@
 Scheduler::Scheduler()
 {
 	//	schedulerType = type;
-	readyList = new List<Thread *>;
+    readyList = new SortedList<Thread *>(cmp);
+	// readyList = new List<Thread *>;
 	toBeDestroyed = NULL;
 }
 //<TODO>
@@ -77,7 +79,8 @@ Scheduler::ReadyToRun (Thread *thread)
     DEBUG(dbgSJF, "Putting thread on ready list: " << thread->getName( ));
 
     thread->setStatus(READY);
-	readyList->Append(thread);
+	
+	readyList->Insert(thread);
     
 }
 //<TODO>
@@ -213,5 +216,12 @@ Scheduler::Print()
 
 //<TODO>
 //Function definition of sorting rule of readyQueue
-
+static int cmp(Thread *a, Thread *b){
+    if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
+        return a->getID() < b->getID();
+    }
+    else{
+        return a->getPredictedBurstTime() < b->getPredictedBurstTime();
+    }
+}
 // <TODO>
