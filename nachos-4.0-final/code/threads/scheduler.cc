@@ -218,9 +218,15 @@ Scheduler::Print()
 //Function definition of sorting rule of readyQueue
 static int cmp(Thread *a, Thread *b){
     if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
+        DEBUG(dbgSJF, "get same priority!\n");
         return a->getID() < b->getID();
     }
     else{
+        DEBUG(dbgSJF,
+              "Thread [" << a->getID( ) << "]'s and Thread [" << b->getID( )
+                         << "]'s burst time are ["
+                         << a->getPredictedBurstTime( ) << "] and ["
+                         << b->getPredictedBurstTime( ) << "]\n");
         return a->getPredictedBurstTime() < b->getPredictedBurstTime();
     }
 }
