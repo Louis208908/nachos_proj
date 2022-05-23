@@ -76,8 +76,6 @@ Scheduler::ReadyToRun (Thread *thread)
 {
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
-    DEBUG(dbgSJF, "Putting thread on ready list: " << thread->getName( ));
-
     thread->setStatus(READY);
 	
 	readyList->Insert(thread);
