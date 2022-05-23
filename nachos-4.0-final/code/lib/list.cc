@@ -236,7 +236,6 @@ SortedList<T>::Insert(T item)
 
     ASSERT(!this->IsInList(item));
     if (this->IsEmpty()) {		// if list is empty, put at front
-        DEBUG(dbgSJF, "Insert to an empty list\n");
         this->first = element;
         this->last = element;
     } else if (compare(item, this->first->item) < 0) {  // item goes at front 
