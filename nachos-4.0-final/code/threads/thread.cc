@@ -101,21 +101,11 @@ Thread::Fork(VoidFunctionPtr func, void *arg)
     IntStatus oldLevel;
     
     DEBUG(dbgThread, "Forking thread: " << name << " f(a): " << (int) func << " " << arg);
-    DEBUG(dbgSJF, "Forking thread: " << name << " f(a): " << (int) func << " " << arg);
     
     StackAllocate(func, arg);
 
     oldLevel = interrupt->SetLevel(IntOff);
-    // int newPredictedBurstTime =
-    //     this->getBurstTime( ) * 0.5 +
-    //     0.5 * kernel->scheduler->getPreviousPrediction( );
-    // DEBUG(dbgSJF,
-    //       "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
-    //                   << this->getID( )
-    //                   << "] update approximate burst time, from: ["
-    //                   << kernel->scheduler->getPreviousPrediction( ) << "] + ["
-    //                   << this->getBurstTime( ) << "], to ["
-    //                   << newPredictedBurstTime << "]\n");
+    
 
     
     scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts are disabled!
@@ -228,25 +218,10 @@ Thread::Yield ()
 	ASSERT(this == kernel->currentThread);
 
 	DEBUG(dbgThread, "Yielding thread: " << name);
-    kernel->currentThread->setEndTime(kernel->stats->totalTicks);
 	nextThread = kernel->scheduler->FindNextToRun();
-    DEBUG(dbgSJF,
-          "<R1> Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                       << this->getID( )
-                       << "] is removed from readyQueue\n");
+    
 
     if (nextThread != NULL) {
-        int newPredictedBurstTime =
-            this->getBurstTime( ) * 0.5 +
-            0.5 * kernel->scheduler->getPreviousPrediction( );
-        DEBUG(dbgSJF,
-              "<U>Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                          << this->getID( )
-                          << "] update approximate burst time, from: ["
-                          << kernel->scheduler->getPreviousPrediction( ) <<
-                          "] + ["
-                          << this->getBurstTime( ) << "], to ["
-                          << newPredictedBurstTime << "]\n");
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
     }
@@ -289,17 +264,13 @@ Thread::Sleep (bool finishing)
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
 	DEBUG(dbgThread, "Sleeping thread: " << name);
-    kernel->currentThread->setEndTime(kernel->stats->totalTicks);
-    kernel->currentThread->getBurstTime();
+
 	status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
 
 		// returns when it's time for us to run
-    DEBUG(dbgSJF,
-          "<R2> Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                       << nextThread->getID( ) << "] is removed from readyQueue\n");
-    nextThread->setStartTime(kernel->stats->totalTicks);
+    
     kernel->scheduler->Run(nextThread, finishing);
 }
 //<TODO>

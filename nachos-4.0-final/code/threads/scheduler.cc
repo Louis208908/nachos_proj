@@ -35,10 +35,7 @@
 // Hint: Funtion Type should be "static int"
 //<TODO>
 int SJFcmp(Thread* a, Thread *b){
-    DEBUG(dbgSJF,
-          "Thread [" << a->getID( ) << "]'s and Thread [" << b->getID( )
-                     << "]'s burst time are [" << a->getPredictedBurstTime( )
-                     << "] and [" << b->getPredictedBurstTime( ) << "]\n");
+
 
     if(a->getPredictedBurstTime() != b->getPredictedBurstTime())
         return a->getPredictedBurstTime() > b->getPredictedBurstTime();
@@ -87,19 +84,8 @@ Scheduler::ReadyToRun (Thread *thread)
     
     ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
-    if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
-        thread->setStatus(READY);
-        readyList->Insert(thread);
-        cout << "Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
-        kernel->currentThread->Yield();
-    }
-    // add preemption condition
-    else{
-        thread->setStatus(READY);
-        readyList->Insert(thread);
-        cout << "bla bla bla Predicted Burst Time of thread " << thread->getID() << " is " << thread->getPredictedBurstTime() << endl;
-        DEBUG(dbgSJF, "<I> Tick [" << kernel->stats->totalTicks << "]: Thread [" << thread->getID() << "] is inserted into readyQueue\n");
-    }
+    thread->setStatus(READY);
+    readyList->Insert(thread);
     
 }
 //<TODO>
@@ -180,7 +166,6 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     // of view of the thread and from the perspective of the "outside world".
 
     cout << "Switching from: " << oldThread->getID() << " to: " << nextThread->getID() << endl;
-    kernel->currentThread->setStartTime(kernel->stats->totalTicks);
     SWITCH(oldThread, nextThread);
 
     // we're back, running oldThread
