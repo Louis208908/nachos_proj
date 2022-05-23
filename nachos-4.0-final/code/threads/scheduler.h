@@ -39,6 +39,18 @@ class Scheduler {
 	void Print();			// Print contents of ready list
    
     // SelfTest for scheduler is implemented in class Thread
+	void setBurstTime(int burstTime){
+		this->nowBurstTime = burstTime;
+	}
+
+	inline int getBurstTime(){
+		return this->nowBurstTime;
+	}
+
+	inline int getPreviousPrediction(){
+		return this->previousPrediction;
+	}
+
     
   private:
 	SchedulerType schedulerType;
@@ -49,7 +61,8 @@ class Scheduler {
 
 	//<TODO>
 	//Variable definition of sorting rule of readyQueue
-	
+	int previousPrediction;
+	int nowBurstTime;
 	//<TODO>
 
 	Thread *toBeDestroyed;		// finishing thread to be destroyed

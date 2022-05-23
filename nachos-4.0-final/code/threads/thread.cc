@@ -151,7 +151,7 @@ Thread::Begin ()
 {
     ASSERT(this == kernel->currentThread);
     DEBUG(dbgThread, "Beginning thread: " << name << ", ID: " << ID);
-    
+    kernel->currentThread->setStartTime(kernel->stats->totalTicks);
     kernel->scheduler->CheckToBeDestroyed();
     kernel->interrupt->Enable();
 }
@@ -180,6 +180,8 @@ Thread::Finish ()
     DEBUG(dbgThread, "Finishing thread: " << name << ", ID: " << ID);
     
     Sleep(TRUE);				// invokes SWITCH
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime());
     // not reached
 }
 
@@ -217,6 +219,8 @@ Thread::Yield ()
 
 	nextThread = kernel->scheduler->FindNextToRun();
 	if (nextThread != NULL) {
+        this->setEndTime(kernel->stats->totalTicks);
+        kernel->scheduler->setBurstTime(this->getBurstTime());
 		kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
