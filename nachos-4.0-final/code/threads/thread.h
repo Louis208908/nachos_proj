@@ -118,6 +118,7 @@ class Thread {
     }
     // 2. set/get RunTime
 	inline int getBurstTime(){
+        DEBUG(dbgSJF,"Get process which starts at Tick[" << startTime << "], ends at Tick[" << endTime << "]");
         return this->burstTime = endTime - startTime;
     }
 
