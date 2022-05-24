@@ -118,7 +118,6 @@ class Thread {
     }
     // 2. set/get RunTime
 	inline int getBurstTime(){
-        cout << "Get process which starts at Tick[" << startTime << "], ends at Tick[" << endTime << "]" << endl;
         return this->burstTime = endTime - startTime;
     }
 
