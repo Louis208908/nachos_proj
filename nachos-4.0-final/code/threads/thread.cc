@@ -216,7 +216,7 @@ Thread::Yield ()
 	ASSERT(this == kernel->currentThread);
     DEBUG(dbgSJF,
           "Yielding process["
-              << this->getID( ) << "], at tick["
+              << this->getID( ) << "], at Tick["
               << this->setEndTime(kernel->stats->totalTicks) 
               << "], Burst time: " << this->getBurstTime( ) << endl);
     kernel->scheduler->setBurstTime(this->getBurstTime( ));
@@ -270,7 +270,7 @@ Thread::Sleep (bool finishing)
 	DEBUG(dbgThread, "Sleeping thread: " << name);
     DEBUG(dbgSJF,
           "Sleeping Process["
-              << this->getID( ) << "], at tick["
+              << this->getID( ) << "], at Tick["
               << this->setEndTime(kernel->stats->totalTicks) 
               << "], thread burst time: " 
               << kernel->scheduler->setBurstTime(this->getBurstTime()));
