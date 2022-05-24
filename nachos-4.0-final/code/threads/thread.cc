@@ -270,8 +270,11 @@ Thread::Sleep (bool finishing)
 	DEBUG(dbgThread, "Sleeping thread: " << name);
     DEBUG(dbgSJF,
           "Sleeping Process["
-              << this->getID( ) << "], start a tick["
-              << this->setEndTime(kernel->stats->totalTicks) << "]");
+              << this->getID( ) << "], at tick["
+              << this->setEndTime(kernel->stats->totalTicks) 
+              << "], thread burst time: " 
+              << kernel->scheduler->setBurstTime(this->getBurstTime()));
+
     status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt

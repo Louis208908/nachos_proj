@@ -39,12 +39,12 @@ class Scheduler {
 	void Print();			// Print contents of ready list
    
     // SelfTest for scheduler is implemented in class Thread
-	void setBurstTime(int burstTime){
-		this->nowBurstTime = burstTime;
+	int setBurstTime(int burstTime){
+		return this->nowBurstTime = burstTime;
 	}
 
-	void setpreviousPrediction(int previousPrediction){
-		this->previousPrediction = previousPrediction;
+	int setpreviousPrediction(int previousPrediction){
+		return this->previousPrediction = previousPrediction;
 	}
 
 	inline int getBurstTime(){
