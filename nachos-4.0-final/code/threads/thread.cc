@@ -214,14 +214,13 @@ Thread::Yield ()
 	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
 
     this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
     ASSERT(this == kernel->currentThread);
     DEBUG(dbgSJF,
           "Yielding process["
               << this->getID( ) << "], at Tick["
               << kernel->stats->totalTicks
               << "], Burst time: " << this->getBurstTime( ) << endl);
-    kernel->scheduler->setBurstTime(this->getBurstTime( ));
-
 
 
     DEBUG(dbgThread, "Yielding thread: " << name);
@@ -269,14 +268,15 @@ Thread::Sleep (bool finishing)
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
 
-    this->setEndTime(kernel->stats->totalTicks):
-	DEBUG(dbgThread, "Sleeping thread: " << name);
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    DEBUG(dbgThread, "Sleeping thread: " << name);
     DEBUG(dbgSJF,
           "Sleeping Process["
               << this->getID( ) << "], at Tick["
               << kernel->stats->totalTicks
               << "], thread burst time: " 
-              << kernel->scheduler->setBurstTime(this->getBurstTime()));
+              << kernel->scheduler->getBurstTime());
 
     status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
