@@ -94,7 +94,7 @@ Scheduler::ReadyToRun (Thread *thread)
                             << kernel->currentThread->getID( )
                             << "]'s burst time are ["
                             << thread->getPredictedBurstTime( ) << "] and ["
-                            << tkernel->currentThread->getPredictedBurstTime( )
+                            << kernel->currentThread->getPredictedBurstTime( )
                             << "] ***");
     }
     else{
