@@ -182,6 +182,8 @@ Thread::Finish ()
     this->setEndTime(kernel->stats->totalTicks);
     DEBUG(dbgSJF, "Thread Finish, Burst time: " << this->getBurstTime() << endl);
     kernel->scheduler->setBurstTime(this->getBurstTime());
+
+    
     Sleep(TRUE);				// invokes SWITCH
     // not reached
 }
