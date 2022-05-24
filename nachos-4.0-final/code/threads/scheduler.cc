@@ -90,13 +90,11 @@ Scheduler::ReadyToRun (Thread *thread)
         // preemption should occurs
         DEBUG(dbgSJF, "process should preempt CPU");
         DEBUG(dbgSJF,
-              "***Thread [" << thread->getID( ) 
-                            << "'s and Thread ["
+              "***Thread [" << thread->getID( ) << "]'s and Thread ["
                             << kernel->currentThread->getID( )
-                            << "'s burst time are ["
-                            << thread->getPredictedBurstTime( ) 
-                            << "] and ["
-                            << thread->getPredictedBurstTime( ) 
+                            << "]'s burst time are ["
+                            << thread->getPredictedBurstTime( ) << "] and ["
+                            << tkernel->currentThread->getPredictedBurstTime( )
                             << "] ***");
     }
     else{
