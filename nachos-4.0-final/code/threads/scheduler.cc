@@ -88,7 +88,7 @@ Scheduler::ReadyToRun (Thread *thread)
     }
 
     DEBUG(dbgSJF, "Now prediction = " << thread->getPredictedBurstTime());
-    DEBUG(dbgSJF, "previous burst = " <<  kernel->scheduler->getBurstTime();
+    DEBUG(dbgSJF, "previous burst = " <<  kernel->scheduler->getBurstTime());
     DEBUG(dbgSJF, "previous prediction = " << kernel->scheduler->getPreviousPrediction());
 	
 	readyList->Insert(thread);
