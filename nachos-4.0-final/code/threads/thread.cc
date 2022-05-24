@@ -178,9 +178,10 @@ Thread::Finish ()
     ASSERT(this == kernel->currentThread);
     
     DEBUG(dbgThread, "Finishing thread: " << name << ", ID: " << ID);
+    DEBUG(dbgSJF, "Finishing thread: " << name << ", ID: " << ID);
     
     this->setEndTime(kernel->stats->totalTicks);
-    DEBUG(dbgSJF, "Thread Finish, Burst time: " << this->getBurstTime() << endl);
+    DEBUG(dbgSJF, ", Burst time: " << this->getBurstTime() << endl);
     kernel->scheduler->setBurstTime(this->getBurstTime());
 
 
