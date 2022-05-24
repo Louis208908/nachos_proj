@@ -40,6 +40,8 @@ Thread::Thread(char* threadName, int threadID)
     stackTop = NULL;
     stack = NULL;
     status = JUST_CREATED;
+    this->startTime = 0;
+    this->endTime = 0;
     for (int i = 0; i < MachineStateSize; i++) {
 	    machineState[i] = NULL;		// not strictly necessary, since new thread ignores contents of machine registers
     }
@@ -178,12 +180,6 @@ Thread::Finish ()
     ASSERT(this == kernel->currentThread);
     
     DEBUG(dbgThread, "Finishing thread: " << name << ", ID: " << ID);
-    DEBUG(dbgSJF, "Finishing thread: " << name << ", ID: " << ID);
-    
-    this->setEndTime(kernel->stats->totalTicks);
-    DEBUG(dbgSJF, ", Burst time: " << this->getBurstTime() << endl);
-    kernel->scheduler->setBurstTime(this->getBurstTime());
-
 
     Sleep(TRUE);				// invokes SWITCH
     // not reached
@@ -218,12 +214,16 @@ Thread::Yield ()
 	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
 
 	ASSERT(this == kernel->currentThread);
-
-    this->setEndTime(kernel->stats->totalTicks);
-    DEBUG(dbgSJF,"Yielding Thread, Burst time: " << this->getBurstTime( ) << endl);
+    DEBUG(dbgSJF,
+          "Yielding process["
+              << this->getID( ) << "], at tick["
+              << this->setEndTime(kernel->stats->totalTicks) 
+              << "], Burst time: " << this->getBurstTime( ) << endl);
     kernel->scheduler->setBurstTime(this->getBurstTime( ));
-    DEBUG(dbgThread, "Yielding thread: " << name);
 
+
+
+    DEBUG(dbgThread, "Yielding thread: " << name);
 	nextThread = kernel->scheduler->FindNextToRun();
 	if (nextThread != NULL) {
 		kernel->scheduler->ReadyToRun(this);
@@ -268,7 +268,10 @@ Thread::Sleep (bool finishing)
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
 	DEBUG(dbgThread, "Sleeping thread: " << name);
-	DEBUG(dbgSJF, "Sleeping thread: " << name);
+    DEBUG(dbgSJF,
+          "Sleeping Process["
+              << this->getID( ) << "], start a tick["
+              << this->setEndTime(kernel->stats->totalTicks) << "]");
     status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt

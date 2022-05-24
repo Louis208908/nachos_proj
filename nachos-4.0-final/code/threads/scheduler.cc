@@ -45,6 +45,7 @@ Scheduler::Scheduler()
 	// readyList = new List<Thread *>;
 	toBeDestroyed = NULL;
     this->previousPrediction = 0;
+    this->nowBurstTime = 0;
 }
 //<TODO>
 
