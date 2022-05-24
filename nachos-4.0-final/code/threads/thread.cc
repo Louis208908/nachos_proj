@@ -215,12 +215,12 @@ Thread::Yield ()
 
 	ASSERT(this == kernel->currentThread);
 
-	DEBUG(dbgThread, "Yielding thread: " << name);
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    DEBUG(dbgThread, "Yielding thread: " << name);
 
 	nextThread = kernel->scheduler->FindNextToRun();
 	if (nextThread != NULL) {
-        this->setEndTime(kernel->stats->totalTicks);
-        kernel->scheduler->setBurstTime(this->getBurstTime());
 		kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
