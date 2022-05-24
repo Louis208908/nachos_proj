@@ -167,7 +167,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     DEBUG(dbgSJF,
           "Start running a new process["
               << nextThread->getID( ) << "], start a tick["
-              << nextThread->setStartTime(kernel->stats->totalTicks));
+              << nextThread->setStartTime(kernel->stats->totalTicks) << "]");
     // DEBUG(dbgThread, "Switching from: " << oldThread->getName() << " to: " << nextThread->getName());
     
     // This is a machine-dependent assembly language routine defined 

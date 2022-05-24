@@ -183,7 +183,7 @@ Thread::Finish ()
     DEBUG(dbgSJF, "Thread Finish, Burst time: " << this->getBurstTime() << endl);
     kernel->scheduler->setBurstTime(this->getBurstTime());
 
-    
+
     Sleep(TRUE);				// invokes SWITCH
     // not reached
 }
@@ -219,7 +219,7 @@ Thread::Yield ()
 	ASSERT(this == kernel->currentThread);
 
     this->setEndTime(kernel->stats->totalTicks);
-    DEBUG(dbgSJF,"Thread Finish, Burst time: " << this->getBurstTime( ) << endl);
+    DEBUG(dbgSJF,"Yielding Thread, Burst time: " << this->getBurstTime( ) << endl);
     kernel->scheduler->setBurstTime(this->getBurstTime( ));
     DEBUG(dbgThread, "Yielding thread: " << name);
 
@@ -267,6 +267,7 @@ Thread::Sleep (bool finishing)
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
 	DEBUG(dbgThread, "Sleeping thread: " << name);
+	DEBUG(dbgSJF, "Sleeping thread: " << name);
     status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
