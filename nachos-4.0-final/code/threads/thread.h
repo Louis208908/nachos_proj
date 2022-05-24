@@ -96,6 +96,7 @@ class Thread {
     void Fork(VoidFunctionPtr func, void *arg); 
     				// Make thread run (*func)(arg)
     void Yield();  		// Relinquish the CPU if any other thread is runnable
+    void Yield(Thread * nextThread);  		// Relinquish the CPU if any other thread is runnable
     void Sleep(bool finishing); // Put the thread to sleep and relinquish the processor
     void Begin();		// Startup code for the thread	
     void Finish();  		// The thread is done executing

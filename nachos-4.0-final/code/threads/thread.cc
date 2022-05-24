@@ -231,6 +231,31 @@ Thread::Yield ()
 	}
 	(void)kernel->interrupt->SetLevel(oldLevel);
 }
+
+
+void
+Thread::Yield (Thread * nextThread)
+{
+
+	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
+
+    ASSERT(this == kernel->currentThread);
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    DEBUG(dbgSJF,
+          "Yielding process["
+              << this->getID( ) << "], at Tick["
+              << kernel->stats->totalTicks
+              << "], Burst time: " << this->getBurstTime( ) << endl);
+
+
+    DEBUG(dbgThread, "Yielding thread: " << name);
+	if (nextThread != NULL) {
+		kernel->scheduler->ReadyToRun(this);
+		kernel->scheduler->Run(nextThread, FALSE);
+	}
+	(void)kernel->interrupt->SetLevel(oldLevel);
+}
 //<TODO>
 
 //----------------------------------------------------------------------

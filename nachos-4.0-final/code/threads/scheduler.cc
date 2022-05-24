@@ -96,13 +96,15 @@ Scheduler::ReadyToRun (Thread *thread)
                             << thread->getPredictedBurstTime( ) << "] and ["
                             << kernel->currentThread->getPredictedBurstTime( )
                             << "] ***");
+
+        kernel->currentThread->Yield(thread);
     }
     else{
         // no preemption, thread push into queue
+	    readyList->Insert(thread);
     }
 
 	
-	readyList->Insert(thread);
 }
 //<TODO>
 
