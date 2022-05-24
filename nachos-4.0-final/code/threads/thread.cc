@@ -213,9 +213,9 @@ Thread::Yield ()
 	Thread *nextThread;
 	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
 
+    ASSERT(this == kernel->currentThread);
     this->setEndTime(kernel->stats->totalTicks);
     kernel->scheduler->setBurstTime(this->getBurstTime( ));
-    ASSERT(this == kernel->currentThread);
     DEBUG(dbgSJF,
           "Yielding process["
               << this->getID( ) << "], at Tick["

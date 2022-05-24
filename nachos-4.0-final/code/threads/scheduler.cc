@@ -80,6 +80,7 @@ Scheduler::ReadyToRun (Thread *thread)
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     thread->setStatus(READY);
     thread->setPredictedBurstTime(0.5 * kernel->scheduler->getBurstTime() + 0.5 * kernel->scheduler->getPreviousPrediction());
+    DEBUG(dbgSJF, "A new ready process [" << thread->getID() << "]");
     DEBUG(dbgSJF, "Now prediction = " << thread->getPredictedBurstTime());
     DEBUG(dbgSJF, "previous burst = " <<  kernel->scheduler->getBurstTime());
     DEBUG(dbgSJF, "previous prediction = " << kernel->scheduler->getPreviousPrediction());
