@@ -43,6 +43,10 @@ class Scheduler {
 		this->nowBurstTime = burstTime;
 	}
 
+	void setpreviousPrediction(int previousPrediction){
+		this->previousPrediction = previousPrediction;
+	}
+
 	inline int getBurstTime(){
 		return this->nowBurstTime;
 	}

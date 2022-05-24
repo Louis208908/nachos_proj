@@ -79,6 +79,7 @@ Scheduler::ReadyToRun (Thread *thread)
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     thread->setStatus(READY);
     thread->setPredictedBurstTime(0.5 * kernel->scheduler->getBurstTime() + 0.5 * kernel->scheduler->getPreviousPrediction());
+    kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
 
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
