@@ -89,7 +89,7 @@ Semaphore::P()
     while (value == 0) { 		// semaphore not available
     	queue->Append(currentThread);	// so go to sleep
     	currentThread->Sleep(FALSE);
-        cout << "Run to Waiting over" << endl;
+        // cout << "Run to Waiting over" << endl;
     } 
     value--; 			// semaphore available, consume its value
    
@@ -115,7 +115,7 @@ Semaphore::V()
     
     if (!queue->IsEmpty()) {  // make thread ready.
 	   kernel->scheduler->ReadyToRun(queue->RemoveFront());
-       cout << "Ready to Run over" << endl;
+    //    cout << "Ready to Run over" << endl;
     }
     value++;
     
@@ -212,7 +212,7 @@ void Lock::Release()
     ASSERT(IsHeldByCurrentThread());
     lockHolder = NULL;
     semaphore->V();
-    cout << "release the lock!\n";
+    // cout << "release the lock!\n";
 }
 
 bool
