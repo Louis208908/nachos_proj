@@ -106,7 +106,8 @@ Scheduler::ReadyToRun (Thread *thread)
                             << "] ***");
 
         // kernel->currentThread->Yield(thread);
-        kernel->currentThread->Sleep(false);
+        kernel->currentThread->Yield();
+        // kernel->currentThread->Sleep(false);
     }
     else{
         DEBUG(dbgSJF,
