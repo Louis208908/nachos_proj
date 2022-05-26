@@ -1,5 +1,5 @@
 #include "syscall.h"
-#include "iostream"
+#include "bits/stdc++.h"
 
 int main(){
 	int i, j;
