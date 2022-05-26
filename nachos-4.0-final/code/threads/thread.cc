@@ -305,7 +305,7 @@ Thread::Sleep (bool finishing)
 
     status = BLOCKED;
 	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL){
-        DEBUG(dbgSJF, "waiting list empty");
+        // DEBUG(dbgSJF, "waiting list empty");
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
     }
 
