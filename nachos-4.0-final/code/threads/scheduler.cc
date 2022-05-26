@@ -84,7 +84,7 @@ Scheduler::ReadyToRun (Thread *thread)
     DEBUG(dbgSJF,
           "<U> Tick ["  << kernel->stats->totalTicks << "]: Thread ["
                         << thread->getID( )
-                        << "update approximate burst time, from: ["
+                        << "] update approximate burst time, from: ["
                         << previous
                         << "] + ["
                         << kernel->scheduler->getBurstTime()
