@@ -223,6 +223,7 @@ Scheduler::CheckToBeDestroyed()
     if (toBeDestroyed != NULL) {
         DEBUG(dbgThread, "toBeDestroyed->getID(): " << toBeDestroyed->getID());
         DEBUG(dbgSJF, "toBeDestroyed->getID(): " << toBeDestroyed->getID());
+        
         delete toBeDestroyed;
         toBeDestroyed = NULL;
     }
