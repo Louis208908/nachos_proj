@@ -58,15 +58,14 @@ class Scheduler {
     
   private:
 	SchedulerType schedulerType;
-	// List<Thread *> *readyList;	// queue of threads that are ready to run,
-					// but not running
+	// List<Thread *> *readyList;	// queue of threads that are ready to run, but not running
 
 	SortedList<Thread *> *readyList;
 
 	//<TODO>
 	//Variable definition of sorting rule of readyQueue
-	int previousPrediction;
-	int nowBurstTime;
+	int previousPrediction; //T - 1
+	int nowBurstTime;		//T
 	//<TODO>
 
 	Thread *toBeDestroyed;		// finishing thread to be destroyed
