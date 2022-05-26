@@ -85,6 +85,7 @@ Scheduler::ReadyToRun (Thread *thread)
     DEBUG(dbgSJF, "previous burst = " <<  kernel->scheduler->getBurstTime());
     DEBUG(dbgSJF, "previous prediction = " << kernel->scheduler->getPreviousPrediction());
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
+	readyList->Insert(thread);
 
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
@@ -97,12 +98,12 @@ Scheduler::ReadyToRun (Thread *thread)
                             << kernel->currentThread->getPredictedBurstTime( )
                             << "] ***");
 
-        kernel->currentThread->Yield(thread);
+        // kernel->currentThread->Yield(thread);
+        kernel->currentThread->Yield();
     }
-    else{
+    // else{
         // no preemption, thread push into queue
-	    readyList->Insert(thread);
-    }
+    // }
     // readyList->Insert(thread);
 
 	
