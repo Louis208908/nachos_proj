@@ -212,6 +212,7 @@ void Lock::Release()
     ASSERT(IsHeldByCurrentThread());
     lockHolder = NULL;
     semaphore->V();
+    cout << "release the lock!\n";
 }
 
 bool
