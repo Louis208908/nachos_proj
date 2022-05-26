@@ -119,7 +119,6 @@ SynchConsoleOutput::PutInt(int value){
         consoleOutput->PutChar(str[index]);
         index++;
         waitFor->P();
-        printf("inside system call\n");
     } while (str[index] != '\0');
     lock->Release();
 }
@@ -134,5 +133,6 @@ SynchConsoleOutput::PutInt(int value){
 void
 SynchConsoleOutput::CallBack()
 {
+    cout << "safe for another output\n";
     waitFor->V();
 }
