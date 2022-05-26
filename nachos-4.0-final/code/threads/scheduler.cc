@@ -231,7 +231,7 @@ Scheduler::CheckToBeDestroyed()
         toBeDestroyed = NULL;
     }
 
-    DEBUG(dbgSJF, "CheckToBeDestoyred Finished!");
+    // DEBUG(dbgSJF, "CheckToBeDestoyred Finished!");
 }
  
 //----------------------------------------------------------------------
