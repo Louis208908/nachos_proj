@@ -79,19 +79,26 @@ Scheduler::ReadyToRun (Thread *thread)
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     thread->setStatus(READY);
-    thread->setPredictedBurstTime(0.5 * kernel->scheduler->getBurstTime() + 0.5 * kernel->scheduler->getPreviousPrediction());
-    // DEBUG(dbgSJF, "A new ready process [" << thread->getID() << "]");
-    // DEBUG(dbgSJF, "Now prediction = " << thread->getPredictedBurstTime());
-    // DEBUG(dbgSJF, "previous burst = " <<  kernel->scheduler->getBurstTime());
-    // DEBUG(dbgSJF, "previous prediction = " << kernel->scheduler->getPreviousPrediction());
+    int previous = kernel->scheduler->getPreviousPrediction();
+    thread->setPredictedBurstTime(0.5 * kernel->scheduler->getBurstTime( ) + 0.5 * previous);
+    DEBUG(dbgSJF,
+          "<U> Tick ["  << kernel->stats->totalTicks << "]: Thread ["
+                        << thread->getID( )
+                        << "update approximate burst time, from: ["
+                        << previous
+                        << "] + ["
+                        << kernel->scheduler->getBurstTime()
+                        << "], to ["
+                        << thread->getPredictedBurstTime()
+                        << "]");
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
-	readyList->Insert(thread);
 
+	readyList->Insert(thread);
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
-        DEBUG(dbgSJF, "process should preempt CPU");
+        // DEBUG(dbgSJF, "process should preempt CPU");
         DEBUG(dbgSJF,
-              "***Thread [" << thread->getID( ) << "]'s and Thread ["
+              "**Thread [" << thread->getID( ) << "]'s and Thread ["
                             << kernel->currentThread->getID( )
                             << "]'s burst time are ["
                             << thread->getPredictedBurstTime( ) << "] and ["
@@ -101,10 +108,15 @@ Scheduler::ReadyToRun (Thread *thread)
         // kernel->currentThread->Yield(thread);
         kernel->currentThread->Yield();
     }
-    // else{
+    else{
+        DEBUG(dbgSJF,
+              "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                           << thread->getID( )
+                           << "] is inserted into readyQueue"
+                           );
         // no preemption, thread push into queue
-    // }
-    // readyList->Insert(thread);
+        // readyList->Insert(thread);
+    }
 
 	
 }
@@ -129,7 +141,13 @@ Scheduler::FindNextToRun ()
 		return NULL;
 	}
 	else {
-		return readyList->RemoveFront(); 
+        Thread *naive = readyList->RemoveFront();
+        DEBUG(dbgSJF,
+              "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                           << naive->getID( )
+                           << "] is removed from readyQueue"
+                           );
+        return naive; 
 	}
 }
 //<TODO>
