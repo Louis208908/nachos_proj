@@ -125,6 +125,10 @@ class Thread {
 	int setStartTime(int start_time){return this->startTime = start_time;}
 	int setEndTime(int end_time){return  this->endTime = end_time;}
 
+  inline int getStartTime(){
+    return this->startTime;
+  }
+
 
 	// 3. set/get PreditedBurstTime
 	inline int getPredictedBurstTime(){
