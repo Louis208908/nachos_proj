@@ -101,7 +101,6 @@ Thread::Fork(VoidFunctionPtr func, void *arg)
     IntStatus oldLevel;
     
     DEBUG(dbgThread, "Forking thread: " << name << " f(a): " << (int) func << " " << arg);
-    DEBUG(dbgSJF, "Forking thread: " << name << " f(a): " << (int) func << " " << arg);
     
     StackAllocate(func, arg);
 
@@ -305,8 +304,10 @@ Thread::Sleep (bool finishing)
               << kernel->scheduler->getBurstTime());
 
     status = BLOCKED;
-	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
+	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL){
+        DEBUG(dbgSJF, "waiting list empty");
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
+    }
 
 		// returns when it's time for us to run
 	kernel->scheduler->Run(nextThread, finishing);
