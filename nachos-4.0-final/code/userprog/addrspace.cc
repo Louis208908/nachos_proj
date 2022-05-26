@@ -192,7 +192,7 @@ AddrSpace::Execute(char *fileName)
     this->InitRegisters();		// set the initial register values
     this->RestoreState();		// load page table register
     Statistics* stats = kernel->stats;
-    DEBUG(dbgSJF, "[AddrSpace::Execute over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
+    // DEBUG(dbgSJF, "[AddrSpace::Execute over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
     kernel->machine->Run();		// jump to the user progam
 
     // ASSERTNOTREACHED();			// machine->Run never returns;

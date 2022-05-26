@@ -252,9 +252,9 @@ Scheduler::Print()
 //<TODO>
 //Function definition of sorting rule of readyQueue
 static int cmp(Thread *a, Thread *b){
-    cout << "inside cmp\n";
+    // cout << "inside cmp\n";
     if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
-        DEBUG(dbgSJF, "get same priority!\n");
+        // DEBUG(dbgSJF, "get same priority!\n");
         return a->getID() < b->getID();
     }
     else{
