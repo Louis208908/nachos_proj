@@ -178,7 +178,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
 
     DEBUG(dbgSJF,
           "Start running a new process["
-              << nextThread->getID( ) << "], start a tick["
+              << nextThread->getID( ) << "], start at Tick["
               << nextThread->setStartTime(kernel->stats->totalTicks) << "]");
     // DEBUG(dbgThread, "Switching from: " << oldThread->getName() << " to: " << nextThread->getName());
     
@@ -195,6 +195,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     ASSERT(kernel->interrupt->getLevel() == IntOff);
 
     DEBUG(dbgThread, "Now in thread: " << kernel->currentThread->getID());
+    DEBUG(dbgSJF, "Now in thread: " << kernel->currentThread->getID());
 
     CheckToBeDestroyed();		// check if thread we were running
 					            // before this one has finished
