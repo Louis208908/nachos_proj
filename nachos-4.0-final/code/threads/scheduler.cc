@@ -85,7 +85,7 @@ Scheduler::ReadyToRun (Thread *thread)
     DEBUG(dbgSJF, "previous burst = " <<  kernel->scheduler->getBurstTime());
     DEBUG(dbgSJF, "previous prediction = " << kernel->scheduler->getPreviousPrediction());
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
-
+    
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
         DEBUG(dbgSJF, "process should preempt CPU");
@@ -175,11 +175,13 @@ Scheduler::Run (Thread *nextThread, bool finishing)
 
     kernel->currentThread = nextThread;  // switch to the next thread
     nextThread->setStatus(RUNNING);      // nextThread is now running
+    nextThread->setStartTime(kernel->stats->totalTicks);
+
 
     DEBUG(dbgSJF,
           "Start running a new process["
               << nextThread->getID( ) << "], start at Tick["
-              << nextThread->setStartTime(kernel->stats->totalTicks) << "]");
+              << nextThread->getStartTime() << "]");
     // DEBUG(dbgThread, "Switching from: " << oldThread->getName() << " to: " << nextThread->getName());
     
     // This is a machine-dependent assembly language routine defined 
@@ -223,10 +225,12 @@ Scheduler::CheckToBeDestroyed()
     if (toBeDestroyed != NULL) {
         DEBUG(dbgThread, "toBeDestroyed->getID(): " << toBeDestroyed->getID());
         DEBUG(dbgSJF, "toBeDestroyed->getID(): " << toBeDestroyed->getID());
-        
+
         delete toBeDestroyed;
         toBeDestroyed = NULL;
     }
+
+    DEBUG(dbgSJF, "CheckToBeDestoyred Finished!");
 }
  
 //----------------------------------------------------------------------
