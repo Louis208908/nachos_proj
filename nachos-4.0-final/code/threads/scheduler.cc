@@ -180,10 +180,10 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     nextThread->setStartTime(kernel->stats->totalTicks);
 
 
-    DEBUG(dbgSJF,
-          "Start running a new process["
-              << nextThread->getID( ) << "], start at Tick["
-              << nextThread->getStartTime() << "]");
+    // DEBUG(dbgSJF,
+    //       "Start running a new process["
+    //           << nextThread->getID( ) << "], start at Tick["
+    //           << nextThread->getStartTime() << "]");
     // DEBUG(dbgThread, "Switching from: " << oldThread->getName() << " to: " << nextThread->getName());
     
     // This is a machine-dependent assembly language routine defined 
@@ -191,7 +191,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     // a bit to figure out what happens after this, both from the point
     // of view of the thread and from the perspective of the "outside world".
 
-    cout << "Switching from: " << oldThread->getID() << " to: " << nextThread->getID() << endl;
+    // cout << "Switching from: " << oldThread->getID() << " to: " << nextThread->getID() << endl;
     SWITCH(oldThread, nextThread);
 
     // we're back, running oldThread
@@ -199,7 +199,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     ASSERT(kernel->interrupt->getLevel() == IntOff);
 
     DEBUG(dbgThread, "Now in thread: " << kernel->currentThread->getID());
-    DEBUG(dbgSJF, "Now in thread: " << kernel->currentThread->getID());
+    // DEBUG(dbgSJF, "Now in thread: " << kernel->currentThread->getID());
 
     CheckToBeDestroyed();		// check if thread we were running
 					            // before this one has finished
