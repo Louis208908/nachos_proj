@@ -1,10 +1,11 @@
 #include "syscall.h"
-#include "bits/stdc++.h"
+
+#include "stdio.h"
 
 int main(){
 	int i, j;
 	for(i = 1;i < 6; ++i){
-		std::cout << "now in sjf_test_2\n";
+		printf("inside sjf_test2\n");
 		PrintInt(2);
 		for(j = 1;j < 50; ++j);
 	}
