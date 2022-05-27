@@ -281,15 +281,9 @@ static int cmp(Thread *a, Thread *b){
                         << "] ***");
     // cout << "inside cmp\n";
     if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
-        DEBUG(dbgSJF, "get same priority!\n");
         return a->getID() < b->getID() ? 0 : -1;
     }
     else{
-        DEBUG(dbgSJF,
-              "Thread [" << a->getID( ) << "]'s and Thread [" << b->getID( )
-                         << "]'s burst time are ["
-                         << a->getPredictedBurstTime( ) << "] and ["
-                         << b->getPredictedBurstTime( ) << "]\n");
         return a->getPredictedBurstTime() < b->getPredictedBurstTime() ? 0 : -1;
     }
 }
