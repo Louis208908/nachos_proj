@@ -97,13 +97,7 @@ Scheduler::ReadyToRun (Thread *thread)
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
         // DEBUG(dbgSJF, "process should preempt CPU");
-        DEBUG(dbgSJF,
-              "***Thread [" << thread->getID( ) << "]'s and Thread ["
-                            << kernel->currentThread->getID( )
-                            << "]'s burst time are ["
-                            << thread->getPredictedBurstTime( ) << "] and ["
-                            << kernel->currentThread->getPredictedBurstTime( )
-                            << "] ***");
+        
 
         // kernel->currentThread->Yield(thread);
         kernel->currentThread->Yield();
@@ -277,6 +271,13 @@ Scheduler::Print()
 //<TODO>
 //Function definition of sorting rule of readyQueue
 static int cmp(Thread *a, Thread *b){
+    DEBUG(dbgSJF,
+          "***Thread [" << thread->getID( ) << "]'s and Thread ["
+                        << kernel->currentThread->getID( )
+                        << "]'s burst time are ["
+                        << thread->getPredictedBurstTime( ) << "] and ["
+                        << kernel->currentThread->getPredictedBurstTime( )
+                        << "] ***");
     // cout << "inside cmp\n";
     if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
         // DEBUG(dbgSJF, "get same priority!\n");
