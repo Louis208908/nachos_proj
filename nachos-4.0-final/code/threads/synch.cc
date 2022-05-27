@@ -88,8 +88,8 @@ Semaphore::P()
     
     while (value == 0) { 		// semaphore not available
     	queue->Append(currentThread);	// so go to sleep
-    	currentThread->Sleep(FALSE);
         cout << "Run to Waiting over" << endl;
+    	currentThread->Sleep(FALSE);
     } 
     value--; 			// semaphore available, consume its value
    
