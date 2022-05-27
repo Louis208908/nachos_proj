@@ -272,11 +272,11 @@ Scheduler::Print()
 //Function definition of sorting rule of readyQueue
 static int cmp(Thread *a, Thread *b){
     DEBUG(dbgSJF,
-          "***Thread [" << thread->getID( ) << "]'s and Thread ["
-                        << kernel->currentThread->getID( )
+          "***Thread [" << a->getID( ) << "]'s and Thread ["
+                        << b->getID( )
                         << "]'s burst time are ["
-                        << thread->getPredictedBurstTime( ) << "] and ["
-                        << kernel->currentThread->getPredictedBurstTime( )
+                        << a->getPredictedBurstTime( ) << "] and ["
+                        << b->getPredictedBurstTime( )
                         << "] ***");
     // cout << "inside cmp\n";
     if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
