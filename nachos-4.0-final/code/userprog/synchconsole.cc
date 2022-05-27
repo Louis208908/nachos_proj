@@ -101,10 +101,13 @@ SynchConsoleOutput::~SynchConsoleOutput()
 void
 SynchConsoleOutput::PutChar(char ch)
 {
+
+    cout << "acquire lock2\n";
     lock->Acquire();
     consoleOutput->PutChar(ch);
     waitFor->P();
     lock->Release();
+    cout << "release lock2\n";
 }
 
 //<REPORT>
@@ -113,7 +116,7 @@ SynchConsoleOutput::PutInt(int value){
     char str[10];
     int index = 0;
     sprintf(str, "%d\0", value);
-
+    cout << "acquire lock\n";
     lock->Acquire();
     do{
         consoleOutput->PutChar(str[index]);
@@ -121,6 +124,7 @@ SynchConsoleOutput::PutInt(int value){
         waitFor->P();
     } while (str[index] != '\0');
     lock->Release();
+    cout << "release lock\n";
 }
 //<REPORT>
 
