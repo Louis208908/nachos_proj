@@ -78,7 +78,7 @@ SynchConsoleOutput::SynchConsoleOutput(char *outputFile)
 {
     consoleOutput = new ConsoleOutput(outputFile, this);
     lock = new Lock("console out");
-    waitFor = new Semaphore("console out", 0);
+    waitFor = new Semaphore("console out", 1);
 }
 
 //----------------------------------------------------------------------
