@@ -88,12 +88,9 @@ Semaphore::P()
     
     while (value == 0) { 		// semaphore not available
     	queue->Append(currentThread);	// so go to sleep
-        // cout << "Run to Waiting over" << endl;
-        // cout << currentThread->getID() << " goes to sleep in semaphore\n";
     	currentThread->Sleep(FALSE);
     } 
     value--; 			// semaphore available, consume its value
-   
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);	
 }
@@ -116,12 +113,14 @@ Semaphore::V()
     
     if (!queue->IsEmpty()) {  // make thread ready.
         Thread* naive = queue->RemoveFront( );
+<<<<<<< HEAD
         //  cout << naive->getID( ) << " wakes up in semaphore\n";
+=======
+>>>>>>> 2025e6542ac8e06d481cd52c374c64b70f8f7018
         kernel->scheduler->ReadyToRun(naive);
-        // cout << "Ready to Run over" << endl;
     }
     value++;
-    
+
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);
 }
