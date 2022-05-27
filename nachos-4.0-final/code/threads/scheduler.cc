@@ -205,10 +205,10 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     nextThread->setStartTime(kernel->stats->totalTicks);
 
 
-    // DEBUG(dbgSJF,
-    //       "Start running a new process["
-    //           << nextThread->getID( ) << "], start at Tick["
-    //           << nextThread->getStartTime() << "]");
+    DEBUG(dbgSJF,
+          "Start running a new process["
+              << nextThread->getID( ) << "], start at Tick["
+              << nextThread->getStartTime() << "]");
     // DEBUG(dbgThread, "Switching from: " << oldThread->getName() << " to: " << nextThread->getName());
     
     // This is a machine-dependent assembly language routine defined 
