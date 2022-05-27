@@ -116,12 +116,12 @@ Semaphore::V()
     
     if (!queue->IsEmpty()) {  // make thread ready.
         Thread* naive = queue->RemoveFront( );
-         cout << naive->getID( ) << " wakes up in semaphore\n";
+        cout << naive->getID( ) << " wakes up in semaphore\n";
+        cout << naive->getID() << "'s turn to critical section\n";
         kernel->scheduler->ReadyToRun(naive);
         // cout << "Ready to Run over" << endl;
     }
     value++;
-    cout << kernel->currentThread->getID() << " leaves critical section\n";
 
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);
