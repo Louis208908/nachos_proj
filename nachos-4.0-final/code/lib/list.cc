@@ -210,6 +210,7 @@ List<T>::Apply(void (*func)(T)) const
 
     for (ptr = first; ptr != NULL; ptr = ptr->next) {
         (*func)(ptr->item);
+        cout << "\n";
     }
 }
 
