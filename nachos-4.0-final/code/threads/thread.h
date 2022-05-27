@@ -114,24 +114,24 @@ class Thread {
 	//<TODO>
     // Set & Get the value in Class Thread
     // 1. get ID
-    inline int getID(){
+    int getID(){
         return ID;
     }
     // 2. set/get RunTime
-	inline int getBurstTime(){
+	  int getBurstTime(){
         return this->burstTime = endTime - startTime;
     }
 
 	int setStartTime(int start_time){return this->startTime = start_time;}
 	int setEndTime(int end_time){return  this->endTime = end_time;}
 
-  inline int getStartTime(){
+  int getStartTime(){
     return this->startTime;
   }
 
 
 	// 3. set/get PreditedBurstTime
-	inline int getPredictedBurstTime(){
+	int getPredictedBurstTime(){
 		return this->PredictedBurstTime;
 	}
 
