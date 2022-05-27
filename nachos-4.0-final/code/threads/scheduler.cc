@@ -142,6 +142,7 @@ Scheduler::FindNextToRun ()
 		return NULL;
 	}
 	else {
+        Print();
         Thread *naive = readyList->RemoveFront();
         DEBUG(dbgSJF,
               "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
