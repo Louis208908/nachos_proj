@@ -95,6 +95,9 @@ Scheduler::ReadyToRun (Thread *thread)
 
 	readyList->Insert(thread);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> non_preemptive
     // if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
     //     // preemption should occurs
     //     // DEBUG(dbgSJF, "process should preempt CPU");
@@ -124,6 +127,7 @@ Scheduler::ReadyToRun (Thread *thread)
                         << thread->getID( )
                         << "] is inserted into readyQueue"
                         );
+<<<<<<< HEAD
 =======
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
@@ -155,6 +159,8 @@ Scheduler::ReadyToRun (Thread *thread)
     //                     << "] is inserted into readyQueue"
     //                     );
 >>>>>>> 
+=======
+>>>>>>> non_preemptive
     // no preemption, thread push into queue
 
 	
