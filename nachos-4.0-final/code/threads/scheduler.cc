@@ -211,7 +211,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     // a bit to figure out what happens after this, both from the point
     // of view of the thread and from the perspective of the "outside world".
 
-    // cout << "Switching from: " << oldThread->getID() << " to: " << nextThread->getID() << endl;
+    cout << "Switching from: " << oldThread->getID() << " to: " << nextThread->getID() << endl;
     SWITCH(oldThread, nextThread);
 
     // we're back, running oldThread
