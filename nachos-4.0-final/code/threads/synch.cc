@@ -91,10 +91,6 @@ Semaphore::P()
     	currentThread->Sleep(FALSE);
     } 
     value--; 			// semaphore available, consume its value
-<<<<<<< HEAD
-=======
-    cout << currentThread->getID( ) << " enters critical section\n";
->>>>>>> 
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);	
 }
@@ -120,10 +116,6 @@ Semaphore::V()
         kernel->scheduler->ReadyToRun(naive);
     }
     value++;
-<<<<<<< HEAD
-=======
-    cout << kernel->currentThread->getID() << " leaves critical section\n";
->>>>>>> 
 
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);
