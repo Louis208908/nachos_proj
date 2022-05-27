@@ -118,7 +118,7 @@ Semaphore::V()
         Thread* naive = queue->RemoveFront( );
          cout << naive->getID( )
                                    << " wakes up in semaphore\n";
-        kernel->scheduler->ReadyToRun();
+        kernel->scheduler->ReadyToRun(naive);
         // cout << "Ready to Run over" << endl;
     }
     value++;
