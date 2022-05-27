@@ -94,6 +94,7 @@ Scheduler::ReadyToRun (Thread *thread)
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
 
 	readyList->Insert(thread);
+    
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
         // DEBUG(dbgSJF, "process should preempt CPU");
