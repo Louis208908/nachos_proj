@@ -133,6 +133,5 @@ SynchConsoleOutput::PutInt(int value){
 void
 SynchConsoleOutput::CallBack()
 {
-    cout << "safe for another output\n";
     waitFor->V();
 }

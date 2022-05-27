@@ -88,7 +88,7 @@ Semaphore::P()
     
     while (value == 0) { 		// semaphore not available
     	queue->Append(currentThread);	// so go to sleep
-        cout << "Run to Waiting over" << endl;
+        // cout << "Run to Waiting over" << endl;
         cout << currentThread->getID() << " goes to sleep in semaphore\n";
     	currentThread->Sleep(FALSE);
     } 
@@ -116,8 +116,7 @@ Semaphore::V()
     
     if (!queue->IsEmpty()) {  // make thread ready.
         Thread* naive = queue->RemoveFront( );
-         cout << naive->getID( )
-                                   << " wakes up in semaphore\n";
+         cout << naive->getID( ) << " wakes up in semaphore\n";
         kernel->scheduler->ReadyToRun(naive);
         // cout << "Ready to Run over" << endl;
     }
