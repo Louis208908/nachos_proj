@@ -124,7 +124,6 @@ Scheduler::ReadyToRun (Thread *thread)
                         << "] is inserted into readyQueue"
                         );
     // no preemption, thread push into queue
-    readyList->Insert(thread);
 
 	
 }
