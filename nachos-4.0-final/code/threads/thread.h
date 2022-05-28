@@ -118,11 +118,7 @@ class Thread {
         return ID;
     }
     // 2. set/get RunTime
-<<<<<<< HEAD
-	inline int getBurstTime(){
-=======
 	  int getBurstTime(){
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
         return this->burstTime = endTime - startTime;
     }
 
@@ -135,13 +131,8 @@ class Thread {
 
 
 	// 3. set/get PreditedBurstTime
-<<<<<<< HEAD
-	inline int getPredictedBurstTime(){
-		return this->predictedBurstTime;
-=======
 	int getPredictedBurstTime(){
 		return this->PredictedBurstTime;
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 	}
 
 	inline void setPredictedBurstTime(int predicted_time){
@@ -165,11 +156,7 @@ class Thread {
 	//<Trace start
 	int ID;
 	int burstTime;
-<<<<<<< HEAD
-	int predictedBurstTime;
-=======
 	int PredictedBurstTime;
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 	
 	int endTime;
 	int startTime;

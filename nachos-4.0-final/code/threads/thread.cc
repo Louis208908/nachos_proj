@@ -221,16 +221,6 @@ Thread::Yield ()
 	Thread *nextThread;
 	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
 
-<<<<<<< HEAD
-	ASSERT(this == kernel->currentThread);
-
-	DEBUG(dbgThread, "Yielding thread: " << name);
-	nextThread = kernel->scheduler->FindNextToRun();
-    
-
-    if (nextThread != NULL) {
-        kernel->scheduler->ReadyToRun(this);
-=======
     ASSERT(this == kernel->currentThread);
     this->setEndTime(kernel->stats->totalTicks);
     kernel->scheduler->setBurstTime(this->getBurstTime( ));
@@ -273,7 +263,6 @@ Thread::Yield (Thread * nextThread)
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
 		kernel->scheduler->ReadyToRun(this);
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 		kernel->scheduler->Run(nextThread, FALSE);
     }
 	(void)kernel->interrupt->SetLevel(oldLevel);
@@ -331,9 +320,6 @@ Thread::Sleep (bool finishing)
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
     }
 
-<<<<<<< HEAD
-		// returns when it's time for us to run
-=======
     DEBUG(dbgSJF,
           "<S> Tick [" << kernel->stats->totalTicks << "]: Thread ["
                         << nextThread->getID( )
@@ -342,7 +328,6 @@ Thread::Sleep (bool finishing)
                         << "] us replaced, and it has executed ["
                         << this->getBurstTime( ) << "] ticks");
     // returns when it's time for us to run
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
     
     kernel->scheduler->Run(nextThread, finishing);
 }

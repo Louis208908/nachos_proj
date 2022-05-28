@@ -47,16 +47,11 @@ int SJFcmp(Thread* a, Thread *b){
 Scheduler::Scheduler()
 {
 	//	schedulerType = type;
-<<<<<<< HEAD
-    readyList     = new SortedList<Thread *>(SJFcmp);
-    toBeDestroyed = NULL;
-=======
     readyList = new SortedList<Thread *>(cmp);
 	// readyList = new List<Thread *>;
 	toBeDestroyed = NULL;
     this->previousPrediction = 0;
     this->nowBurstTime = 0;
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 }
 //<TODO>
 
@@ -87,16 +82,6 @@ Scheduler::~Scheduler()
 void
 Scheduler::ReadyToRun (Thread *thread)
 {
-<<<<<<< HEAD
-
-
-    
-    ASSERT(kernel->interrupt->getLevel() == IntOff);
-	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
-    thread->setStatus(READY);
-    readyList->Insert(thread);
-    
-=======
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     thread->setStatus(READY);
@@ -141,7 +126,6 @@ Scheduler::ReadyToRun (Thread *thread)
     // no preemption, thread push into queue
 
 	
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 }
 //<TODO>
 
