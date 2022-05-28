@@ -228,14 +228,9 @@ Thread::Yield ()
                             << this->getID( )
                             << "] is replaced, and it has executed ["
                             << this->getBurstTime( ) << "] ticks");
-        if(nextThread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
-
-            kernel->scheduler->ReadyToRun(this);
-            kernel->scheduler->Run(nextThread, FALSE);
-        }
-        else{
-            kernel->scheduler->ReadyToRun(nextThread);
-        }
+        
+		kernel->scheduler->ReadyToRun(this);
+		kernel->scheduler->Run(nextThread, FALSE);
 	}
 	(void)kernel->interrupt->SetLevel(oldLevel);
 }
@@ -259,7 +254,6 @@ Thread::Yield (Thread * nextThread)
 
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
-        // if()
 		kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
