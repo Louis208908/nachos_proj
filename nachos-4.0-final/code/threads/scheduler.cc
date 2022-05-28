@@ -103,7 +103,6 @@ Scheduler::ReadyToRun (Thread *thread)
         // kernel->currentThread->Sleep(false);
     }
     else{
-	    readyList->Insert(thread);
         DEBUG(dbgSJF,
               "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
                            << thread->getID( )
@@ -112,6 +111,7 @@ Scheduler::ReadyToRun (Thread *thread)
         // no preemption, thread push into queue
         // readyList->Insert(thread);
     }
+    readyList->Insert(thread);
     // DEBUG(dbgSJF,
     //         "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
     //                     << thread->getID( )
