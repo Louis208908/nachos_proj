@@ -105,7 +105,7 @@ Thread::Fork(VoidFunctionPtr func, void *arg)
     StackAllocate(func, arg);
 
     oldLevel = interrupt->SetLevel(IntOff);
-    scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts are disabled!
+    // scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts are disabled!
     (void) interrupt->SetLevel(oldLevel);
 }    
 
@@ -228,8 +228,11 @@ Thread::Yield ()
                             << this->getID( )
                             << "] is replaced, and it has executed ["
                             << this->getBurstTime( ) << "] ticks");
-		kernel->scheduler->ReadyToRun(this);
-		kernel->scheduler->Run(nextThread, FALSE);
+        if(nextThread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
+
+            kernel->scheduler->ReadyToRun(this);
+            kernel->scheduler->Run(nextThread, FALSE);
+        }
 	}
 	(void)kernel->interrupt->SetLevel(oldLevel);
 }
