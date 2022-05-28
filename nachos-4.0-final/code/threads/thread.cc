@@ -233,6 +233,9 @@ Thread::Yield ()
             kernel->scheduler->ReadyToRun(this);
             kernel->scheduler->Run(nextThread, FALSE);
         }
+        else{
+            kernel->scheduler->ReadyToRun(nextThread);
+        }
 	}
 	(void)kernel->interrupt->SetLevel(oldLevel);
 }
@@ -256,6 +259,7 @@ Thread::Yield (Thread * nextThread)
 
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
+        // if()
 		kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
