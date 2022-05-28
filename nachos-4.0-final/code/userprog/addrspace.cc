@@ -166,7 +166,7 @@ AddrSpace::Load(char *fileName)
 
 
     Statistics* stats = kernel->stats;
-    DEBUG(dbgSJF, "[AddrSpace::Load over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
+    // DEBUG(dbgSJF, "[AddrSpace::Load over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
 
     delete executable;			// close file
     return TRUE;			// success
@@ -184,8 +184,13 @@ void
 AddrSpace::Execute(char *fileName) 
 {
     if (!Load(fileName)) {
+<<<<<<< HEAD
     cout << "inside !Load(FileName)" << endl;
     return;             // executable not found
+=======
+        cout << "inside !Load(FileName)" << endl;
+        return;             // executable not found
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
     }
     kernel->currentThread->space = this;
 

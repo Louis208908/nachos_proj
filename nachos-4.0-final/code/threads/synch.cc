@@ -89,10 +89,8 @@ Semaphore::P()
     while (value == 0) { 		// semaphore not available
     	queue->Append(currentThread);	// so go to sleep
     	currentThread->Sleep(FALSE);
-        // cout << "Run to Waiting over" << endl;
     } 
     value--; 			// semaphore available, consume its value
-   
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);	
 }
@@ -114,11 +112,11 @@ Semaphore::V()
     IntStatus oldLevel = interrupt->SetLevel(IntOff);	
     
     if (!queue->IsEmpty()) {  // make thread ready.
-	   kernel->scheduler->ReadyToRun(queue->RemoveFront());
-       // cout << "Ready to Run over" << endl;
+        Thread* naive = queue->RemoveFront( );
+        kernel->scheduler->ReadyToRun(naive);
     }
     value++;
-    
+
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);
 }
@@ -212,6 +210,7 @@ void Lock::Release()
     ASSERT(IsHeldByCurrentThread());
     lockHolder = NULL;
     semaphore->V();
+    // cout << "release the lock!\n";
 }
 
 bool

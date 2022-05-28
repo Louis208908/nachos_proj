@@ -96,6 +96,7 @@ class Thread {
     void Fork(VoidFunctionPtr func, void *arg); 
     				// Make thread run (*func)(arg)
     void Yield();  		// Relinquish the CPU if any other thread is runnable
+    void Yield(Thread * nextThread);  		// Relinquish the CPU if any other thread is runnable
     void Sleep(bool finishing); // Put the thread to sleep and relinquish the processor
     void Begin();		// Startup code for the thread	
     void Finish();  		// The thread is done executing
@@ -113,21 +114,34 @@ class Thread {
 	//<TODO>
     // Set & Get the value in Class Thread
     // 1. get ID
-    inline int getID(){
+    int getID(){
         return ID;
     }
     // 2. set/get RunTime
+<<<<<<< HEAD
 	inline int getBurstTime(){
+=======
+	  int getBurstTime(){
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
         return this->burstTime = endTime - startTime;
     }
 
 	int setStartTime(int start_time){return this->startTime = start_time;}
 	int setEndTime(int end_time){return  this->endTime = end_time;}
 
+  int getStartTime(){
+    return this->startTime;
+  }
+
 
 	// 3. set/get PreditedBurstTime
+<<<<<<< HEAD
 	inline int getPredictedBurstTime(){
 		return this->predictedBurstTime;
+=======
+	int getPredictedBurstTime(){
+		return this->PredictedBurstTime;
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 	}
 
 	inline void setPredictedBurstTime(int predicted_time){
@@ -151,7 +165,11 @@ class Thread {
 	//<Trace start
 	int ID;
 	int burstTime;
+<<<<<<< HEAD
 	int predictedBurstTime;
+=======
+	int PredictedBurstTime;
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 	
 	int endTime;
 	int startTime;

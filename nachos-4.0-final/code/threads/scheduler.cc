@@ -33,6 +33,7 @@
 //<TODO>
 // Declare sorting rule of SortedList
 // Hint: Funtion Type should be "static int"
+static int cmp(Thread *a, Thread *b);
 //<TODO>
 int SJFcmp(Thread* a, Thread *b){
 
@@ -46,8 +47,16 @@ int SJFcmp(Thread* a, Thread *b){
 Scheduler::Scheduler()
 {
 	//	schedulerType = type;
+<<<<<<< HEAD
     readyList     = new SortedList<Thread *>(SJFcmp);
     toBeDestroyed = NULL;
+=======
+    readyList = new SortedList<Thread *>(cmp);
+	// readyList = new List<Thread *>;
+	toBeDestroyed = NULL;
+    this->previousPrediction = 0;
+    this->nowBurstTime = 0;
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 }
 //<TODO>
 
@@ -78,6 +87,7 @@ Scheduler::~Scheduler()
 void
 Scheduler::ReadyToRun (Thread *thread)
 {
+<<<<<<< HEAD
 
 
     
@@ -86,6 +96,52 @@ Scheduler::ReadyToRun (Thread *thread)
     thread->setStatus(READY);
     readyList->Insert(thread);
     
+=======
+	ASSERT(kernel->interrupt->getLevel() == IntOff);
+	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
+    thread->setStatus(READY);
+    int previous = kernel->scheduler->getPreviousPrediction();
+    thread->setPredictedBurstTime(0.5 * kernel->scheduler->getBurstTime( ) + 0.5 * previous);
+    DEBUG(dbgSJF,
+          "<U> Tick ["  << kernel->stats->totalTicks << "]: Thread ["
+                        << thread->getID( )
+                        << "] update approximate burst time, from: ["
+                        << previous
+                        << "] + ["
+                        << kernel->scheduler->getBurstTime()
+                        << "], to ["
+                        << thread->getPredictedBurstTime()
+                        << "]");
+    kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
+
+    if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
+        // preemption should occurs
+        DEBUG(dbgSJF, "process should preempt CPU");
+        
+
+        // kernel->currentThread->Yield(thread);
+        kernel->currentThread->Yield();
+        // kernel->currentThread->Sleep(false);
+    }
+    else{
+        DEBUG(dbgSJF,
+              "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                           << thread->getID( )
+                           << "] is inserted into readyQueue"
+                           );
+        // no preemption, thread push into queue
+        // readyList->Insert(thread);
+    }
+    readyList->Insert(thread);
+    // DEBUG(dbgSJF,
+    //         "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+    //                     << thread->getID( )
+    //                     << "] is inserted into readyQueue"
+    //                     );
+    // no preemption, thread push into queue
+
+	
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 }
 //<TODO>
 
@@ -108,7 +164,14 @@ Scheduler::FindNextToRun ()
 		return NULL;
 	}
 	else {
-		return readyList->RemoveFront(); 
+        // Print();
+        Thread *naive = readyList->RemoveFront();
+        DEBUG(dbgSJF,
+              "<R> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                           << naive->getID( )
+                           << "] is removed from readyQueue"
+                           );
+        return naive; 
 	}
 }
 //<TODO>
@@ -156,7 +219,13 @@ Scheduler::Run (Thread *nextThread, bool finishing)
 
     kernel->currentThread = nextThread;  // switch to the next thread
     nextThread->setStatus(RUNNING);      // nextThread is now running
-    
+    nextThread->setStartTime(kernel->stats->totalTicks);
+
+
+    DEBUG(dbgSJF,
+          "Start running a new process["
+              << nextThread->getID( ) << "], start at Tick["
+              << nextThread->getStartTime() << "]");
     // DEBUG(dbgThread, "Switching from: " << oldThread->getName() << " to: " << nextThread->getName());
     
     // This is a machine-dependent assembly language routine defined 
@@ -172,6 +241,7 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     ASSERT(kernel->interrupt->getLevel() == IntOff);
 
     DEBUG(dbgThread, "Now in thread: " << kernel->currentThread->getID());
+    // DEBUG(dbgSJF, "Now in thread: " << kernel->currentThread->getID());
 
     CheckToBeDestroyed();		// check if thread we were running
 					            // before this one has finished
@@ -198,9 +268,12 @@ Scheduler::CheckToBeDestroyed()
 {
     if (toBeDestroyed != NULL) {
         DEBUG(dbgThread, "toBeDestroyed->getID(): " << toBeDestroyed->getID());
+
         delete toBeDestroyed;
         toBeDestroyed = NULL;
     }
+
+    // DEBUG(dbgSJF, "CheckToBeDestoyred Finished!");
 }
  
 //----------------------------------------------------------------------
@@ -220,5 +293,25 @@ Scheduler::Print()
 
 //<TODO>
 //Function definition of sorting rule of readyQueue
-
+static int cmp(Thread *a, Thread *b){
+    DEBUG(dbgSJF,
+          "***Thread [" << a->getID( ) << "]'s and Thread ["
+                        << b->getID( )
+                        << "]'s burst time are ["
+                        << a->getPredictedBurstTime( ) << "] and ["
+                        << b->getPredictedBurstTime( )
+                        << "] ***");
+    // cout << "inside cmp\n";
+    if(a->getPredictedBurstTime() == b->getPredictedBurstTime()){
+        return a->getID() < b->getID() ? 0 : -1;
+    }
+    else{
+        DEBUG(dbgSJF,
+              "Thread [" << a->getID( ) << "]'s and Thread [" << b->getID( )
+                         << "]'s burst time are ["
+                         << a->getPredictedBurstTime( ) << "] and ["
+                         << b->getPredictedBurstTime( ) << "]\n");
+        return a->getPredictedBurstTime() < b->getPredictedBurstTime() ? 0 : -1;
+    }
+}
 // <TODO>

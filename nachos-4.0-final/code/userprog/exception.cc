@@ -78,6 +78,7 @@ ExceptionHandler(ExceptionType which)
 			return;
 */		case SC_Exit:
 			DEBUG(dbgAddr, "Program exit\n");
+			DEBUG(dbgSJF, "Program exit\n");
 			val=kernel->machine->ReadRegister(4);
 			cout << "return value:" << val << endl;
 			kernel->currentThread->Finish();

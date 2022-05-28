@@ -40,8 +40,13 @@ Thread::Thread(char* threadName, int threadID)
     stackTop = NULL;
     stack = NULL;
     status = JUST_CREATED;
+<<<<<<< HEAD
     predictedBurstTime = 0;
     burstTime = 0;
+=======
+    this->startTime = 0;
+    this->endTime = 0;
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
     for (int i = 0; i < MachineStateSize; i++) {
 	    machineState[i] = NULL;		// not strictly necessary, since new thread ignores contents of machine registers
     }
@@ -155,7 +160,7 @@ Thread::Begin ()
 {
     ASSERT(this == kernel->currentThread);
     DEBUG(dbgThread, "Beginning thread: " << name << ", ID: " << ID);
-    
+    kernel->currentThread->setStartTime(kernel->stats->totalTicks);
     kernel->scheduler->CheckToBeDestroyed();
     kernel->interrupt->Enable();
 }
@@ -182,7 +187,8 @@ Thread::Finish ()
     ASSERT(this == kernel->currentThread);
     
     DEBUG(dbgThread, "Finishing thread: " << name << ", ID: " << ID);
-    
+    DEBUG(dbgSJF, "Finishing thread: " << name << ", ID: " << ID);
+
     Sleep(TRUE);				// invokes SWITCH
     // not reached
 }
@@ -215,6 +221,7 @@ Thread::Yield ()
 	Thread *nextThread;
 	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
 
+<<<<<<< HEAD
 	ASSERT(this == kernel->currentThread);
 
 	DEBUG(dbgThread, "Yielding thread: " << name);
@@ -223,6 +230,50 @@ Thread::Yield ()
 
     if (nextThread != NULL) {
         kernel->scheduler->ReadyToRun(this);
+=======
+    ASSERT(this == kernel->currentThread);
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+
+	nextThread = kernel->scheduler->FindNextToRun();
+
+    DEBUG(dbgThread, "Yielding thread: " << name);
+	if (nextThread != NULL) {
+        DEBUG(dbgSJF,
+            "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                            << nextThread->getID( )
+                            << "] is now selected for execution, thread ["
+                            << this->getID( )
+                            << "] is replaced, and it has executed ["
+                            << this->getBurstTime( ) << "] ticks");
+        
+		kernel->scheduler->ReadyToRun(this);
+		kernel->scheduler->Run(nextThread, FALSE);
+	}
+	(void)kernel->interrupt->SetLevel(oldLevel);
+}
+
+
+void
+Thread::Yield (Thread * nextThread)
+{
+
+	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
+
+    ASSERT(this == kernel->currentThread);
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    DEBUG(dbgSJF,
+          "Yielding process["
+              << this->getID( ) << "], at Tick["
+              << kernel->stats->totalTicks
+              << "], Burst time: " << this->getBurstTime( ) << endl);
+
+
+    DEBUG(dbgThread, "Yielding thread: " << name);
+	if (nextThread != NULL) {
+		kernel->scheduler->ReadyToRun(this);
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
 		kernel->scheduler->Run(nextThread, FALSE);
     }
 	(void)kernel->interrupt->SetLevel(oldLevel);
@@ -263,13 +314,35 @@ Thread::Sleep (bool finishing)
 	ASSERT(this == kernel->currentThread);
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
-	DEBUG(dbgThread, "Sleeping thread: " << name);
 
-	status = BLOCKED;
-	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
+    this->setEndTime(kernel->stats->totalTicks);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    DEBUG(dbgThread, "Sleeping thread: " << name);
+    // DEBUG(dbgSJF,
+    //       "Sleeping Process["
+    //           << this->getID( ) << "], at Tick["
+    //           << kernel->stats->totalTicks
+    //           << "], thread burst time: " 
+    //           << kernel->scheduler->getBurstTime());
+
+    status = BLOCKED;
+	while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL){
+        // DEBUG(dbgSJF, "waiting list empty");
 		kernel->interrupt->Idle();	// no one to run, wait for an interrupt
+    }
 
+<<<<<<< HEAD
 		// returns when it's time for us to run
+=======
+    DEBUG(dbgSJF,
+          "<S> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                        << nextThread->getID( )
+                        << "] is now selected for execution, thread ["
+                        << this->getID( )
+                        << "] us replaced, and it has executed ["
+                        << this->getBurstTime( ) << "] ticks");
+    // returns when it's time for us to run
+>>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
     
     kernel->scheduler->Run(nextThread, finishing);
 }

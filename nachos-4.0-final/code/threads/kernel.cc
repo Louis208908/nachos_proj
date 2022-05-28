@@ -52,7 +52,7 @@ ThreadedKernel::Initialize()
     interrupt = new Interrupt;		// start up interrupt handling
     scheduler = new Scheduler();	// initialize the ready queue
     alarm = new Alarm(randomSlice);	// start up time slicing
-
+    
     // We didn't explicitly allocate the current thread we are running in.
     // But if it ever tries to give up the CPU, we better have a Thread
     // object to save its state. 
