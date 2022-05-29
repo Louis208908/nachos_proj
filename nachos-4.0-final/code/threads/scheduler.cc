@@ -104,11 +104,11 @@ Scheduler::ReadyToRun (Thread *thread)
         // DEBUG(dbgSJF, "process should preempt CPU");
         DEBUG(dbgSJF,
               "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                            << nextThread->getID( )
+                            << kernel->currentThread->getID( )
                             << "] is now selected for execution, thread ["
-                            << this->getID( )
+                            << thread->getID( )
                             << "] is replaced, and it has executed ["
-                            << this->getBurstTime( ) << "] ticks");
+                            << thread->getBurstTime( ) << "] ticks");
 
         // kernel->currentThread->Yield(thread);
         kernel->currentThread->Yield();
