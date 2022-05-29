@@ -166,7 +166,7 @@ AddrSpace::Load(char *fileName)
 
 
     Statistics* stats = kernel->stats;
-    // DEBUG(dbgSJF, "[AddrSpace::Load over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
+    DEBUG(dbgSJF, "[AddrSpace::Load over] Tick [" << stats->totalTicks << "]: Thread [" << kernel->currentThread->getID() << "]");
 
     delete executable;			// close file
     return TRUE;			// success

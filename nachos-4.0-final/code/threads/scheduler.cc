@@ -117,12 +117,7 @@ Scheduler::ReadyToRun (Thread *thread)
         // readyList->Insert(thread);
     }
     readyList->Insert(thread);
-    // DEBUG(dbgSJF,
-    //         "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
-    //                     << thread->getID( )
-    //                     << "] is inserted into readyQueue"
-    //                     );
-    // no preemption, thread push into queue
+
 
 	
 }
