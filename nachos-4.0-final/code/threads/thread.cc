@@ -218,7 +218,7 @@ Thread::Yield ()
 
     ASSERT(this == kernel->currentThread);
     this->setEndTime(kernel->stats->totalTicks);
-    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    // kernel->scheduler->setBurstTime(this->getBurstTime( ));
 
 	nextThread = kernel->scheduler->FindNextToRun();
 
@@ -273,9 +273,9 @@ Thread::Sleep (bool finishing)
 	ASSERT(this == kernel->currentThread);
 	ASSERT(kernel->interrupt->getLevel() == IntOff);
 
-
-    this->setEndTime(kernel->stats->totalTicks);
-    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    this->setBurstTime(0);
+    // this->setEndTime(kernel->stats->totalTicks);
+    // kernel->scheduler->setBurstTime(this->getBurstTime( ));
     DEBUG(dbgThread, "Sleeping thread: " << name);
     // DEBUG(dbgSJF,
     //       "Sleeping Process["

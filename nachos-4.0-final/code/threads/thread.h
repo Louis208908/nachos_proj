@@ -119,8 +119,14 @@ class Thread {
     }
     // 2. set/get RunTime
 	  int getBurstTime(){
-        return this->burstTime = endTime - startTime;
+        return this->burstTime;
     }
+
+    void setBurstTimme(int burstTime){
+       this->burstTime = burstTime;
+    }
+
+
 
 	int setStartTime(int start_time){return this->startTime = start_time;}
 	int setEndTime(int end_time){return  this->endTime = end_time;}
