@@ -224,7 +224,6 @@ Thread::Yield ()
 
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
-        
 		kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
