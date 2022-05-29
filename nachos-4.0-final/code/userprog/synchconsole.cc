@@ -116,13 +116,13 @@ SynchConsoleOutput::PutInt(int value){
 
     lock->Acquire();
     do{
-        cout << "Enter critical section\n";
+        // cout << "Enter critical section\n";
         consoleOutput->PutChar(str[index]);
         index++;
         waitFor->P();
     } while (str[index] != '\0');
     lock->Release();
-    cout << "Leave critical section\n";
+    // cout << "Leave critical section\n";
 }
 //<REPORT>
 
