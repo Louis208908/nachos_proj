@@ -86,7 +86,7 @@ Scheduler::ReadyToRun (Thread *thread)
 	DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
     thread->setStatus(READY);
     int previous = kernel->scheduler->getPreviousPrediction();
-    thread->setPredictedBurstTime(0.5 * kernel->currentThread->getBurstTime( ) + 0.5 * previous);
+    thread->setPredictedBurstTime(0.5 * kernel->scheduler->getBurstTime( ) + 0.5 * previous);
     DEBUG(dbgSJF,
           "<U> Tick ["  << kernel->stats->totalTicks << "]: Thread ["
                         << thread->getID( )
@@ -98,13 +98,22 @@ Scheduler::ReadyToRun (Thread *thread)
                         << thread->getPredictedBurstTime()
                         << "]");
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
-    // readyList->Insert(thread);
+    thread->setBurstTime(0);
 
     if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
         // preemption should occurs
         // DEBUG(dbgSJF, "process should preempt CPU");
+        // DEBUG(dbgSJF,
+        //       "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+        //                     << kernel->currentThread->getID( )
+        //                     << "] is now selected for execution, thread ["
+        //                     << thread->getID( )
+        //                     << "] is replaced, and it has executed ["
+        //                     << thread->getBurstTime( ) << "] ticks");
         kernel->interrupt->yieldOnReturn = TRUE;
+        // kernel->currentThread->Yield(thread);
         // kernel->currentThread->Yield();
+        // kernel->currentThread->Sleep(false);
     }
     else{
         DEBUG(dbgSJF,
