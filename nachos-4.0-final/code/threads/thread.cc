@@ -40,13 +40,8 @@ Thread::Thread(char* threadName, int threadID)
     stackTop = NULL;
     stack = NULL;
     status = JUST_CREATED;
-<<<<<<< HEAD
-    predictedBurstTime = 0;
-    burstTime = 0;
-=======
     this->startTime = 0;
     this->endTime = 0;
->>>>>>> 1f921c96d033756b65da6832577f736a0705acb9
     for (int i = 0; i < MachineStateSize; i++) {
 	    machineState[i] = NULL;		// not strictly necessary, since new thread ignores contents of machine registers
     }
