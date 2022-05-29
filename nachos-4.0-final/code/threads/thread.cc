@@ -224,8 +224,14 @@ Thread::Yield ()
 
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
-        
-		kernel->scheduler->ReadyToRun(this);
+        DEBUG(dbgSJF,
+              "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                            << nextThread->getID( )
+                            << "] is now selected for execution, thread ["
+                            << kernel->currentThread->getID( )
+                            << "] is replaced, and it has executed ["
+                            << kernel->currentThread->getBurstTime( ) << "] ticks");
+        kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
 	(void)kernel->interrupt->SetLevel(oldLevel);
@@ -289,7 +295,7 @@ Thread::Sleep (bool finishing)
                         << nextThread->getID( )
                         << "] is now selected for execution, thread ["
                         << this->getID( )
-                        << "] us replaced, and it has executed ["
+                        << "] is replaced, and it has executed ["
                         << this->getBurstTime( ) << "] ticks");
     // returns when it's time for us to run
     
