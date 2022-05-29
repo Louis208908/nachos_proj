@@ -122,7 +122,7 @@ class Thread {
         return this->burstTime;
     }
 
-    void setBurstTimme(int burstTime){
+    void setBurstTime(int burstTime){
        this->burstTime = burstTime;
     }
 
