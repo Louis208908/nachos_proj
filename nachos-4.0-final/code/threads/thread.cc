@@ -224,13 +224,13 @@ Thread::Yield ()
 
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
-        DEBUG(dbgSJF,
-              "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                            << nextThread->getID( )
-                            << "] is now selected for execution, thread ["
-                            << kernel->currentThread->getID( )
-                            << "] is replaced, and it has executed ["
-                            << kernel->currentThread->getBurstTime( ) << "] ticks");
+        // DEBUG(dbgSJF,
+        //       "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+        //                     << nextThread->getID( )
+        //                     << "] is now selected for execution, thread ["
+        //                     << kernel->currentThread->getID( )
+        //                     << "] is replaced, and it has executed ["
+        //                     << kernel->currentThread->getBurstTime( ) << "] ticks");
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
