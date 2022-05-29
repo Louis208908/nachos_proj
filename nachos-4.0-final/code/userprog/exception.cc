@@ -65,6 +65,7 @@ ExceptionHandler(ExceptionType which)
 		case SC_PrintInt:
 			// DEBUG(dbgMLFQ, "Print Int");
 			val=kernel->machine->ReadRegister(4);
+			cout << kernel->currentThread->getID();
 			kernel->synchConsoleOut->PutInt(val);
 			DEBUG(dbgSJF, "\n");
 			return;
