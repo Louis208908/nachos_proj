@@ -296,7 +296,7 @@ Thread::Sleep (bool finishing)
                         << nextThread->getID( )
                         << "] is now selected for execution, thread ["
                         << this->getID( )
-                        << "] us replaced, and it has executed ["
+                        << "] is replaced, and it has executed ["
                         << this->getBurstTime( ) << "] ticks");
     // returns when it's time for us to run
     
