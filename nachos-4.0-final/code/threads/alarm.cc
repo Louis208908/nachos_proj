@@ -54,7 +54,7 @@ Alarm::CallBack()
     Interrupt *interrupt = kernel->interrupt;
     MachineStatus status = interrupt->getStatus();
     
-	kernel->currentThread->setBurstTimme(kernel->currentThread->getBurstTime() + 100);
+	kernel->currentThread->setBurstTime(kernel->currentThread->getBurstTime() + 100);
 
 	if (status == IdleMode) {	// is it time to quit?
 		if (!interrupt->AnyFutureInterrupts()) {
