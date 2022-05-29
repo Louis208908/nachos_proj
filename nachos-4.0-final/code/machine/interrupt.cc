@@ -303,9 +303,7 @@ Interrupt::CheckIfDue(bool advanceClock)
     }
 
     DEBUG(dbgInt, "Invoking interrupt handler for the ");
-    DEBUG(dbgSJF, "Invoking interrupt handler for the ");
     DEBUG(dbgInt, intTypeNames[next->type] << " at time " << next->when);
-    DEBUG(dbgSJF, intTypeNames[next->type] << " at time " << next->when);
 #ifdef USER_PROGRAM
     if (kernel->machine != NULL) {
     	kernel->machine->DelayedLoad(0, 0);
