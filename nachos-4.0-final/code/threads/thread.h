@@ -136,8 +136,8 @@ class Thread {
 	}
 
 	inline void setPredictedBurstTime(int predicted_time){
-		this->predictedBurstTime = predicted_time;
-	}
+        this->PredictedBurstTime = predicted_time;
+    }
 
     //<TODO>
 
