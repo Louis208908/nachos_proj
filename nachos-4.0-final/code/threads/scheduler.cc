@@ -93,7 +93,7 @@ Scheduler::ReadyToRun (Thread *thread)
                         << "] update approximate burst time, from: ["
                         << previous
                         << "] + ["
-                        << kernel->scheduler->getBurstTime()
+                        << thread->getBurstTime()
                         << "], to ["
                         << thread->getPredictedBurstTime()
                         << "]");
