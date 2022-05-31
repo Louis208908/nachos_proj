@@ -234,7 +234,8 @@ Thread::Yield ()
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
-	(void)kernel->interrupt->SetLevel(oldLevel);
+    kernel->scheduler->setBurstTime(this->getBurstTime( ));
+    (void)kernel->interrupt->SetLevel(oldLevel);
 }
 
 //<TODO>
