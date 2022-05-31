@@ -99,24 +99,25 @@ Scheduler::ReadyToRun (Thread *thread)
                         << "]");
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
     thread->setBurstTime(0);
-
-    if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
-        // preemption should occurs
-        kernel->interrupt->yieldOnReturn = TRUE;
-        // kernel->currentThread->Yield(thread);
-        // kernel->currentThread->Yield();
-        // kernel->currentThread->Sleep(false);
+    if(thread !=  kernel->currentThread){
+        if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
+            // preemption should occurs
+            kernel->interrupt->yieldOnReturn = TRUE;
+            // kernel->currentThread->Yield(thread);
+            // kernel->currentThread->Yield();
+            // kernel->currentThread->Sleep(false);
+        }
+        else{
+            DEBUG(dbgSJF,
+                "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
+                            << thread->getID( )
+                            << "] is inserted into readyQueue"
+                            );
+            // no preemption, thread push into queue
+            // readyList->Insert(thread);
+        }
+        readyList->Insert(thread);
     }
-    else{
-        DEBUG(dbgSJF,
-              "<I> Tick [" << kernel->stats->totalTicks << "]: Thread ["
-                           << thread->getID( )
-                           << "] is inserted into readyQueue"
-                           );
-        // no preemption, thread push into queue
-        // readyList->Insert(thread);
-    }
-    readyList->Insert(thread);
 
 
 	
