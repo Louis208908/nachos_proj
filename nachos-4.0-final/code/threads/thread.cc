@@ -231,10 +231,10 @@ Thread::Yield ()
                             << kernel->currentThread->getID( )
                             << "] is replaced, and it has executed ["
                             << kernel->currentThread->getBurstTime( ) << "] ticks");
+        kernel->scheduler->setBurstTime(this->getBurstTime( ));
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
-    kernel->scheduler->setBurstTime(this->getBurstTime( ));
     (void)kernel->interrupt->SetLevel(oldLevel);
 }
 
