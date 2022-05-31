@@ -99,7 +99,7 @@ Scheduler::ReadyToRun (Thread *thread)
                         << "]");
     kernel->scheduler->setpreviousPrediction(thread->getPredictedBurstTime());
     thread->setBurstTime(0);
-    if(thread !=  kernel->currentThread){
+    // if(thread !=  kernel->currentThread){
         if(thread->getPredictedBurstTime() < kernel->currentThread->getPredictedBurstTime()){
             // preemption should occurs
             kernel->interrupt->yieldOnReturn = TRUE;
@@ -117,7 +117,7 @@ Scheduler::ReadyToRun (Thread *thread)
             // readyList->Insert(thread);
         }
         readyList->Insert(thread);
-    }
+    // }
 
 
 	
