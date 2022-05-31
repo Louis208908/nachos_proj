@@ -222,6 +222,9 @@ Thread::Yield ()
 
     DEBUG(dbgThread, "Yielding thread: " << name);
 	if (nextThread != NULL) {
+        this->setEndTime(kernel->stats->totalTicks);
+        int T = this->getBurstTime( ); 
+        kernel->scheduler->setBurstTime( T );
         DEBUG(dbgSJF,
               "<YS> Tick [" << kernel->stats->totalTicks << "]: Thread ["
                             << nextThread->getID( )
@@ -230,8 +233,6 @@ Thread::Yield ()
                             << "] is replaced, and it has executed ["
                             << kernel->currentThread->getBurstTime( )
                             << "] ticks");
-        this->setEndTime(kernel->stats->totalTicks);
-        kernel->scheduler->setBurstTime(this->getBurstTime( ));
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
