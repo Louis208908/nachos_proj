@@ -217,8 +217,6 @@ Thread::Yield ()
 	IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
 
     ASSERT(this == kernel->currentThread);
-    this->setEndTime(kernel->stats->totalTicks);
-    kernel->scheduler->setBurstTime(this->getBurstTime( ));
 
 	nextThread = kernel->scheduler->FindNextToRun();
 
@@ -232,6 +230,8 @@ Thread::Yield ()
                             << "] is replaced, and it has executed ["
                             << kernel->currentThread->getBurstTime( )
                             << "] ticks");
+        this->setEndTime(kernel->stats->totalTicks);
+        kernel->scheduler->setBurstTime(this->getBurstTime( ));
         kernel->scheduler->ReadyToRun(this);
 		kernel->scheduler->Run(nextThread, FALSE);
 	}
